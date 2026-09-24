@@ -1,0 +1,3 @@
+-keepattributes *Annotation*
+-keep class com.example.deeplock.data.content.** { *; }
+-keepclassmembers class com.example.deeplock.data.content.** { *** Companion; }

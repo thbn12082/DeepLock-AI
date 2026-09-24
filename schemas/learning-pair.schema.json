@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deeplock.local/schemas/learning-pair.schema.json",
+  "title": "LearningPair",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["pair_id", "atom_id", "micro_lesson_id", "question_ids", "revision", "content_hash", "ai_review_status"],
+  "properties": {
+    "pair_id": {"type": "string", "minLength": 1},
+    "atom_id": {"type": "string", "minLength": 1},
+    "micro_lesson_id": {"type": "string", "minLength": 1},
+    "question_ids": {"type": "array", "minItems": 3, "items": {"type": "string"}, "uniqueItems": true},
+    "revision": {"type": "integer", "minimum": 1},
+    "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "ai_review_status": {"type": "string", "enum": ["PENDING", "AI_APPROVED", "QUARANTINED"]}
+  }
+}
+

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CourseOutline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["course", "modules"],
+  "properties": {
+    "course": {
+      "type": "object", "additionalProperties": false,
+      "required": ["course_id", "title", "description", "language"],
+      "properties": {
+        "course_id": {"type": "string"}, "title": {"type": "string"},
+        "description": {"type": "string"}, "language": {"type": "string", "const": "vi"}
+      }
+    },
+    "modules": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["module_id", "order_index", "title", "objective", "atom_plans"],
+        "properties": {
+          "module_id": {"type": "string"}, "order_index": {"type": "integer", "minimum": 0},
+          "title": {"type": "string"}, "objective": {"type": "string"},
+          "atom_plans": {
+            "type": "array", "minItems": 1, "maxItems": 10,
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["atom_id", "order_index", "title", "objective", "prerequisite_ids", "source_ref_ids"],
+              "properties": {
+                "atom_id": {"type": "string"}, "order_index": {"type": "integer", "minimum": 0},
+                "title": {"type": "string"}, "objective": {"type": "string"},
+                "prerequisite_ids": {"type": "array", "items": {"type": "string"}},
+                "source_ref_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

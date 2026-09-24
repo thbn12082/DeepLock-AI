@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AtomContent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lesson", "quiz_bundle", "mini_lab"],
+  "properties": {
+    "lesson": {"$ref": "lesson.schema.json"},
+    "quiz_bundle": {"$ref": "quiz-bundle.schema.json"},
+    "mini_lab": {"anyOf": [{"$ref": "mini-lab.schema.json"}, {"type": "null"}]}
+  }
+}
+

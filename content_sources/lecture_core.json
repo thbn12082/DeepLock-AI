@@ -1,0 +1,794 @@
+{
+  "course_id": "course_deep_learning_core_vi",
+  "title": "Deep Learning từ bài giảng thực tế",
+  "description": "Khóa học vi mô tiếng Việt được tạo từ bộ Lecture, có câu hỏi ôn tập và hình minh họa giữ nguyên từ trang bài giảng nguồn.",
+  "archive": "Lecture/Full DL .zip",
+  "atoms_per_module": 3,
+  "pages_per_part": 12,
+  "stable_content_id_seed": "sha256:b2734c5744601ff97ecd8e0b6f73f25fa48d1ee227e79b4abb0fee0bc450f6a6",
+  "allowed_mini_lab_atom_ids": [
+    "module_mlp_part_04_atom_2",
+    "module_mlp_part_04_atom_3",
+    "module_mlp_part_06_atom_3",
+    "module_cnn_part_02_atom_2",
+    "module_cnn_part_06_atom_1",
+    "module_cnn_part_08_atom_1",
+    "module_transformer_part_02_atom_1",
+    "module_gan_part_02_atom_3",
+    "module_vae_part_02_atom_1"
+  ],
+  "allowed_mini_lab_types": {
+    "module_mlp_part_04_atom_2": "ACTIVATION_CURVE",
+    "module_mlp_part_04_atom_3": "ACTIVATION_CURVE",
+    "module_mlp_part_06_atom_3": "ACTIVATION_CURVE",
+    "module_cnn_part_02_atom_2": "CONVOLUTION_2D",
+    "module_cnn_part_06_atom_1": "CONVOLUTION_2D",
+    "module_cnn_part_08_atom_1": "CONVOLUTION_2D",
+    "module_transformer_part_02_atom_1": "ACTIVATION_CURVE",
+    "module_gan_part_02_atom_3": "ACTIVATION_CURVE",
+    "module_vae_part_02_atom_1": "ACTIVATION_CURVE"
+  },
+  "suppress_formula_block_atom_ids": [
+    "module_gnn_part_03_atom_3"
+  ],
+  "excluded_image_only_pages": [
+    {"file": "01_mlp.pdf", "page": 49, "reason": "Quiz Time divider; no technical content"},
+    {"file": "01_mlp.pdf", "page": 71, "reason": "question/end divider; no technical content"},
+    {"file": "02_cnn.pdf", "page": 61, "reason": "Quiz Time divider; no technical content"},
+    {"file": "02_cnn.pdf", "page": 89, "reason": "Thank You end slide; no technical content"},
+    {"file": "08_optimizers.pdf", "page": 68, "reason": "Quiz Time divider; no technical content"},
+    {"file": "08_optimizers.pdf", "page": 81, "reason": "question/end divider; no technical content"}
+  ],
+  "excluded_nontechnical_pages": [
+    {"file": "01_mlp.pdf", "page": 14, "reason": "Using PyTorch section divider; no technical content"},
+    {"file": "01_mlp.pdf", "page": 50, "reason": "Step-by-Step Implementation section divider; no technical content"},
+    {"file": "01_mlp.pdf", "page": 60, "reason": "Summary and Next Steps section divider; no technical content"},
+    {"file": "03_transformer.pdf", "page": 64, "reason": "Quiz Time divider; no technical content"},
+    {"file": "03_transformer.pdf", "page": 66, "reason": "Thanks/end divider; no technical content"},
+    {"file": "06_vae.pdf", "page": 91, "reason": "question/end divider; no technical content"},
+    {"file": "07_gnn.pdf", "page": 74, "reason": "Next Topics divider; no technical content"},
+    {"file": "07_gnn.pdf", "page": 78, "reason": "question/end divider; no technical content"}
+  ],
+  "modules": [
+    {
+      "module_id": "module_mlp",
+      "title": "Multilayer Perceptron (MLP)",
+      "illustration_page": 42,
+      "illustration_caption": "Luồng dữ liệu qua input, hidden layer, ReLU, output và Softmax của một MLP.",
+      "page_text_overrides": {
+        "30": "Softmax Regression cho ảnh, Case 2: dùng ảnh gốc chưa normalization và learning rate 0.00001. Mô hình PyTorch là nn.Sequential(nn.Flatten(), nn.Linear(784, 10)), chuyển model sang device, dùng CrossEntropyLoss và SGD. Trong mỗi epoch: chuyển inputs/labels sang device, zero_grad, forward để lấy outputs, tính loss, lấy lớp dự đoán bằng torch.max, cộng số dự đoán đúng, backward rồi optimizer.step. Đồ thị 100 epoch cho thấy train/test accuracy tăng nhanh rồi bão hòa, trong khi train/test loss giảm nhưng còn ở thang tương đối lớn.",
+        "33": "Softmax Regression + Normalization, Case 3: chuẩn hóa pixel từ [0,255] về [0,1] bằng Image/255, dùng CrossEntropyLoss và SGD với learning rate 0.01. Đồ thị train/test loss cùng giảm mạnh rồi hội tụ; train/test accuracy cùng tăng và khoảng cách giữa hai đường còn nhỏ. So với ảnh chưa normalization và learning rate rất nhỏ, việc đưa dữ liệu về thang [0,1] cho phép dùng learning rate lớn hơn và hội tụ tốt hơn.",
+        "35": "Softmax Regression + Normalization, Case 4: chuẩn hóa pixel về [-1,1] bằng Image/127.5 - 1. Mô hình vẫn gồm Flatten và Linear 784→10, dùng CrossEntropyLoss, SGD learning rate 0.01 và vòng lặp zero_grad → forward → loss → prediction/accuracy → backward → step. Đồ thị cho thấy loss train/test giảm ổn định, accuracy tăng rồi bão hòa; train tốt hơn test một khoảng nhỏ.",
+        "37": "Softmax Regression + Normalization, Case 5: dùng Z-score (Image - mean)/standard deviation. Qua 100 epoch, train/test accuracy cùng tăng nhanh rồi bão hòa; train accuracy cao hơn test accuracy. Train/test loss cùng giảm, trong đó train loss thấp hơn test loss. Trang này dùng các đường learning curve để so sánh khả năng hội tụ và khoảng cách khái quát hóa khi dữ liệu được chuẩn hóa bằng mean và standard deviation."
+      },
+      "page_text_supplements": {
+        "2": "Bảng dữ liệu tabular có bốn đặc trưng Sepal Length, Sepal Width, Petal Length, Petal Width và nhãn 0/1/2. Softmax regression nối bốn đầu vào cùng bias tới ba logit z1,z2,z3 rồi Softmax tạo ba dự đoán; ví dụ đạt training accuracy >98%.",
+        "6": "Ảnh xám được biểu diễn bởi ma trận kích thước Height×Width. Mỗi pixel là một scalar p với 0≤p≤255; số pixel, hay resolution theo cách gọi trong bài, bằng Height×Width.",
+        "7": "Ảnh màu có dạng Height×Width×channel. Mỗi pixel RGB là vector cột [r,g,b]^T với 0≤r,g,b≤255; số vị trí pixel bằng Height×Width.",
+        "8": "Ví dụ import urllib.request as req, PIL.Image và matplotlib.pyplot. req.urlretrieve(url,name) tải tệp; img=Image.open(name) mở ảnh; plt.imshow(img) hiển thị ảnh. Demo tải image.jpg rồi hiển thị ảnh phong cảnh.",
+        "9": "Ảnh xám 28×28 có 784 pixel. Nếu mỗi pixel 0–255 được lưu bằng một unsigned byte thì phần dữ liệu pixel cần 28×28×1=784 byte, chưa tính metadata hay nén.",
+        "10": "Định dạng IDX của MNIST: tệp label có magic number 0x00000801 tại offset 0, số item tại offset 4 và mỗi label là một unsigned byte từ offset 8; nhãn nằm trong 0–9. Tệp image có magic number 0x00000803, số ảnh tại offset 4, số hàng 28 tại offset 8, số cột 28 tại offset 12 và các pixel unsigned byte từ offset 16.",
+        "12": "Bốn tệp Fashion-MNIST được tải là train-images-idx3-ubyte.gz, train-labels-idx1-ubyte.gz, t10k-images-idx3-ubyte.gz và t10k-labels-idx1-ubyte.gz. Code dùng from urllib import request, base_url của Fashion-MNIST S3 và request.urlretrieve(base_url+name, folder+name); mỗi ảnh 28×28 được flatten thành 784 giá trị.",
+        "13": "Code dùng numpy và gzip. Ảnh train/test được đọc bằng np.frombuffer(f.read(),np.uint8,offset=16).reshape(-1,28*28); label train/test dùng offset=8. Kết quả: X_train (60000,784), y_train (60000,), X_test (10000,784), y_test (10000,).",
+        "16": "FashionMNIST(root='data',train=True,download=True) trả 60000 mẫu, mỗi mẫu là (PIL image,label). img,label=trainset[0] cho kiểu PIL.Image.Image và label 9; matplotlib hiển thị ảnh bằng cmap='gray' và ẩn trục.",
+        "17": "Dùng transforms.Compose([transforms.ToTensor()]) trong FashionMNIST biến mỗi ảnh thành torch.Tensor. Muốn hiển thị, lấy img.numpy(), transpose từ C×H×W sang H×W×C bằng np.transpose(np_img,(1,2,0)), rồi plt.imshow(...,cmap='gray').",
+        "18": "DataLoader(trainset,batch_size=1024,num_workers=2,shuffle=True) chia 60000 mẫu thành 59 batch; mỗi phần tử vẫn là cặp image tensor và label. Batch cuối có thể nhỏ hơn 1024 vì drop_last không được bật.",
+        "19": "Code minh họa đổi batch_size thành 3500 rồi in inputs.shape và labels.shape theo batch: các batch đầy đủ có shape [3500,1,28,28] và [3500], batch cuối có 500 mẫu. Hình khái niệm vẫn ghi 1024 mẫu, nhưng code thực thi dùng 3500.",
+        "21": "Với hai lớp: z_i=xw_i+b_i, ŷ_i=e^{z_i}/Σ_{j=0}^1e^{z_j}; y=0 mã hóa [1,0], y=1 mã hóa [0,1]. L(θ)=-Σ_i y_i log ŷ_i=-y^T log ŷ. Đạo hàm: ∂L/∂ŷ_i=-y_i/ŷ_i; ∂ŷ_i/∂z_j=ŷ_i(1-ŷ_i) nếu i=j, ngược lại -ŷ_iŷ_j; do đó ∂L/∂z_i=ŷ_i-y_i, ∂L/∂w_i=x(ŷ_i-y_i), ∂L/∂b_i=ŷ_i-y_i.",
+        "22": "Một cách flatten ở pipeline dữ liệu là transforms.Compose([transforms.ToTensor(),transforms.Lambda(torch.flatten)]). FashionMNIST sau transform trả img.shape=torch.Size([784]); vector 784 chiều đi qua normalization, Linear 784→10 rồi Softmax.",
+        "23": "Nếu flatten thuộc pipeline dữ liệu, ảnh 28×28 được đổi thành vector 784 trước normalization; vector này là input 784 nút cho lớp fully connected 784→10 và Softmax.",
+        "24": "Nếu transform chỉ chứa ToTensor(), mẫu giữ shape torch.Size([1,28,28]). Khi đó flatten đặt trong model: input 28×28 → Flatten 784 → Linear 784→10 → Softmax; normalization vẫn được áp dụng trước đầu vào model.",
+        "25": "Case 1 dùng dữ liệu chưa normalization và learning rate 0.01. X_train/X_test có shape (60000,784)/(10000,784); model=nn.Sequential(nn.Flatten(),nn.Linear(784,10)). Tensor ngẫu nhiên torch.rand(5,28,28) đi qua model cho output shape torch.Size([5,10]).",
+        "26": "Model nn.Sequential(nn.Flatten(),nn.Linear(784,10)) được chuyển sang device, dùng CrossEntropyLoss và SGD(lr=0.01). Mỗi bước chuyển inputs/labels sang device, zero_grad, forward, tính loss và accuracy, backward rồi step. Với pixel chưa normalization, đồ thị 100 epoch có accuracy train/test dao động mạnh quanh khoảng 70–80% và loss ở thang rất lớn, cho thấy learning rate 0.01 không ổn định trong thang dữ liệu này.",
+        "27": "Muốn tính trên GPU, cả data và model phải được chuyển sang cùng device bằng to(device) trước khi model sử dụng data.",
+        "28": "Hai cấu hình sai được minh họa: data ở GPU nhưng model còn CPU, hoặc model ở GPU nhưng data còn CPU. Phép forward qua hai device khác nhau không hợp lệ; data và model phải cùng CPU hoặc cùng GPU.",
+        "29": "Case 2 giữ pixel chưa normalization nhưng hạ learning rate xuống 0.00001. Model vẫn là nn.Sequential(nn.Flatten(),nn.Linear(784,10)); tensor shape [5,28,28] tạo logits shape [5,10].",
+        "31": "Ba phép chuẩn hóa: Image/255 đưa [0,255] về [0,1]; Image/127.5-1 đưa về [-1,1]; Z-score là (Image-μ)/σ. Sau ToTensor, Normalize(mean,std) thực hiện (Image-mean)/std trên thang [0,1]: mean=0,std=1 giữ [0,1]; mean=0.5,std=0.5 đưa về [-1,1]; Z-score dùng mean và std tính từ dữ liệu.",
+        "32": "Case 3 dùng transform=transforms.Compose([transforms.ToTensor()]); FashionMNIST(...,train=True,download=True,transform=transform). ToTensor tự đổi pixel về [0,1], tương đương Image/255; pipeline sau đó Flatten 784 → Linear 784→10 → Softmax.",
+        "34": "Case 4 dùng transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.5,),(0.5,))]). Công thức (x-0.5)/0.5 tương đương Image/127.5-1, đưa pixel về [-1,1]; model vẫn Flatten 784 → Linear 784→10.",
+        "36": "Case 5 dùng transforms.Compose([transforms.ToTensor(),transforms.Normalize((mean,),(std,))]), với mean và std được tính từ dữ liệu. Đây là Z-score (Image-μ)/σ trước Linear 784→10.",
+        "41": "ReLU(x)=0 nếu x≤0 và ReLU(x)=x nếu x>0. Với data=[1,5,-4,3,-2], ReLU(data)=[1,5,0,3,0]; đồ thị bằng 0 ở nửa trục âm và là đường y=x ở nửa trục dương.",
+        "42": "Ví dụ model=nn.Sequential(nn.Linear(4,3),nn.ReLU(),nn.Linear(3,3)). Số tham số lần lượt là 15,0,12; tổng 27 tham số trainable. Sơ đồ có 4 input, một hidden layer 3 nút dùng ReLU và 3 output được vẽ với Softmax; code Sequential hiển thị dừng ở Linear cuối và không chứa lớp Softmax tường minh.",
+        "43": "MLP hai hidden layer được cài bằng nn.Sequential(nn.Linear(4,3),nn.ReLU(),nn.Linear(3,2),nn.ReLU(),nn.Linear(2,3)). Số tham số là 15+0+8+0+9=32; các output shape lần lượt [-1,3],[-1,3],[-1,2],[-1,2],[-1,3].",
+        "44": "Mô hình Fashion-MNIST dùng Image/255, Flatten 28×28 thành 784, rồi nn.Sequential(nn.Linear(784,256),nn.ReLU(),nn.Linear(256,10)). Sơ đồ biểu diễn hidden layer 256 nút và 10 output qua Softmax.",
+        "45": "Ba mẫu có X=[[1.5,0.2],[4.7,1.6],[5.6,2.2]], y=[0,1,2]^T. Ma trận hidden kể cả bias được in là W_h=[[0,0],[0.86,-1.04],[0.41,-0.65]]; ma trận output kể cả bias được in là W_z=[[0,0,0],[0.32,0.25,0.14],[-0.47,-1.06,0.063]]. Các hệ số chỉ được hiển thị với ít chữ số thập phân, nên không được dùng chúng để suy ra rằng mọi kết quả số tiếp theo là đẳng thức chính xác.",
+        "46": "Thêm cột bias 1 vào X: [[1,1.5,0.2],[1,4.7,1.6],[1,5.6,2.2]]. Tài liệu báo h=XW_h=[[1.373,-1.696],[4.708,-5.951],[5.731,-7.281]] và ReLU(h)=[[1.373,0],[4.708,0],[5.731,0]]. Nếu nhân đúng các hệ số W_h đã làm tròn được in, kết quả gần đúng là [[1.372,-1.690],[4.698,-5.928],[5.718,-7.254]]; chênh lệch cho thấy nguồn dùng trọng số chưa làm tròn hoặc có lỗi chép số.",
+        "47": "Thêm bias vào activation mà tài liệu báo: [1,ReLU(h)]=[[1,1.373,0],[1,4.708,0],[1,5.731,0]]. Tài liệu tiếp tục báo logits z=[[0.439,0.356,0.195],[1.507,1.220,0.670],[1.835,1.485,0.816]]. Đây là các logits được báo trong nguồn; chúng không khớp hoàn toàn khi nhân lại bằng W_z chỉ hiển thị với các hệ số đã làm tròn, vì vậy không nên coi chuỗi số là phép kiểm chứng chính xác từ ma trận in.",
+        "48": "Softmax của các logits được tài liệu báo cho ŷ=[[0.369,0.340,0.289],[0.458,0.343,0.198],[0.484,0.341,0.174]]. Với nhãn [0,1,2], loss được báo là 1.269; chuỗi logits→softmax→loss này nhất quán trong sai số làm tròn. Sự không nhất quán nằm ở bước suy logits từ các ma trận trọng số chỉ được in rút gọn, không nằm ở phép Softmax.",
+        "51": "Data chuẩn bị bằng T.Compose([T.ToTensor(),T.Normalize((0.5,),(0.5,))]). FashionMNIST train dùng train=True và DataLoader(batch_size=64,shuffle=True); test dùng train=False và DataLoader(batch_size=64,shuffle=False). Sơ đồ ghi 1024 mẫu mỗi batch nhưng code thực thi dùng 64.",
+        "52": "Model=nn.Sequential(nn.Flatten(),nn.Linear(784,256),nn.ReLU(),nn.Linear(256,10)); model được chuyển sang device. Loss là nn.CrossEntropyLoss(), optimizer là optim.SGD(model.parameters(),lr=0.01). Code trả logits ở Linear cuối; Softmax chỉ xuất hiện trong sơ đồ.",
+        "53": "Training chạy max_epoch=5. Mỗi batch: chuyển inputs và labels sang device, optimizer.zero_grad(), outputs=model(inputs), loss=criterion(outputs,labels), loss.backward(), optimizer.step(); sau mỗi epoch in Epoch [1/5] đến Epoch [5/5].",
+        "54": "Inference đặt correct=0,total=0 và bọc testloader trong torch.no_grad(). Mỗi batch được chuyển sang device, outputs=model(images), predicted=torch.max(outputs.data,1); cập nhật total bằng labels.size(0), correct bằng số predicted==labels, rồi accuracy=100*correct/total.",
+        "55": "Training metric cộng correct, total và running_loss trong từng epoch; epoch_accuracy=100*correct/total, running_loss/=i+1. Kết quả 5 epoch (loss,accuracy): (0.7866,74.73%), (0.5209,81.59%), (0.4706,83.28%), (0.4432,84.25%), (0.4232,85.13%).",
+        "56": "evaluate(model,testloader,criterion) gọi model.eval(), đặt test_loss/correct/total về 0, dùng torch.no_grad(), cộng loss.item() và số dự đoán đúng, rồi trả test_loss/len(testloader) và accuracy. Training loop gọi evaluate sau mỗi epoch. Nếu mô hình có BatchNorm hoặc Dropout, cần gọi model.train() trước pha train kế tiếp; code hiển thị chưa có lệnh này, dù MLP hiện tại không chứa hai lớp đó.",
+        "57": "Kết quả test theo 5 epoch (test loss,test accuracy): (0.5817,79.18%), (0.5139,81.26%), (0.4818,82.80%), (0.4602,83.40%), (0.4479,83.92%).",
+        "58": "Softmax regression dùng Flatten→Linear(784,10) và đạt training accuracy khoảng 86%. MLP dùng Flatten→Linear(784,256)→ReLU→Linear(256,10) và đạt khoảng 90%, cho thấy hidden layer tăng capacity.",
+        "59": "Mạng so sánh có hai hidden layer, mỗi layer 256 nút. Bốn learning curve ứng với không normalization, [0,1], [-1,1] và Z-score: các biến thể normalization đưa training accuracy lên gần 100% nhanh hơn, trong khi validation accuracy bão hòa quanh 89%, tạo khoảng cách khái quát hóa rõ.",
+        "61": "Pipeline tổng quát theo thứ tự: chuẩn bị dữ liệu → chuẩn hóa → xây dựng mạng → khởi tạo tham số; sau đó chọn optimizer, loss function và metric.",
+        "64": "Ba công thức normalization được tổng kết: Image/255 cho [0,1]; Image/127.5-1 cho [-1,1]; (Image-μ)/σ cho Z-score. μ là mean và σ là standard deviation của ảnh hoặc của training data.",
+        "65": "Trong lý thuyết pixel ban đầu X∈[0,255]. Sau ToTensor, PyTorch làm việc trên X∈[0,1] và Normalize(mean,std) tính (Image-mean)/std: mean=0,std=1 giữ [0,1]; mean=0.5,std=0.5 cho [-1,1]; Z-score dùng mean/std tính từ dữ liệu.",
+        "68": "Số nút của hidden layer là một hyperparameter cần chọn. Ví dụ minh họa dùng input 784 nút, một hidden layer với Sigmoid, rồi output 10 nút với Softmax.",
+        "69": "Số nút hidden có thể được chọn bằng grid search trên tập ứng viên [N1,N2,…,Nk], đánh giá từng cấu hình trước khi chốt độ rộng layer."
+      },
+      "additional_illustrations": [
+        {
+          "page": 30,
+          "asset_member": "illustration_module_mlp_p30.png",
+          "caption": "Case 2: vòng lặp train Softmax Regression trên pixel chưa chuẩn hóa cùng learning curve."
+        },
+        {
+          "page": 33,
+          "asset_member": "illustration_module_mlp_p33.png",
+          "caption": "Case 3: train/test loss và accuracy khi chuẩn hóa pixel về [0,1]."
+        },
+        {
+          "page": 35,
+          "asset_member": "illustration_module_mlp_p35.png",
+          "caption": "Case 4: vòng lặp train và learning curve khi chuẩn hóa pixel về [-1,1]."
+        },
+        {
+          "page": 37,
+          "asset_member": "illustration_module_mlp_p37.png",
+          "caption": "Case 5: learning curve khi dùng Z-score normalization."
+        }
+      ],
+      "entry": "AIO - Sao chép/6. Deep Learning/2. MLP (khởi đầu của Deep Learning)/3. MLP (slide).pdf",
+      "output": "01_mlp.pdf"
+    },
+    {
+      "module_id": "module_cnn",
+      "title": "Convolutional Neural Network (CNN)",
+      "illustration_page": 19,
+      "additional_illustrations": [
+        {
+          "page": 11,
+          "asset_member": "illustration_module_cnn_p11.png",
+          "caption": "Động lực CNN từ vùng tiếp nhận thị giác và pipeline ảnh–feature map."
+        },
+        {
+          "page": 14,
+          "asset_member": "illustration_module_cnn_p14.png",
+          "caption": "Chuỗi CONV–ReLU–POOL học đặc trưng phân cấp trước tầng fully connected."
+        },
+        {
+          "page": 15,
+          "asset_member": "illustration_module_cnn_p15.png",
+          "caption": "Kiến trúc CNN hoàn chỉnh từ ảnh input qua các tầng convolution, pooling và fully connected tới vector lớp output."
+        },
+        {
+          "page": 16,
+          "asset_member": "illustration_module_cnn_p16.png",
+          "caption": "Bộ lọc làm nổi biên và tạo feature map từ ảnh đầu vào."
+        },
+        {
+          "page": 31,
+          "asset_member": "illustration_module_cnn_p31.png",
+          "caption": "Padding trước/sau biên và convolution trên input nhiều kênh."
+        },
+        {
+          "page": 40,
+          "asset_member": "illustration_module_cnn_p40.png",
+          "caption": "Cửa sổ convolution stride 2 và output 2×2 hoàn chỉnh."
+        },
+        {
+          "page": 47,
+          "asset_member": "illustration_module_cnn_p47.png",
+          "caption": "So sánh max, min và average pooling trên feature map."
+        },
+        {
+          "page": 57,
+          "asset_member": "illustration_module_cnn_p57.png",
+          "caption": "AveragePool2d: input, cửa sổ, output và mã PyTorch."
+        },
+        {
+          "page": 60,
+          "asset_member": "illustration_module_cnn_p60.png",
+          "caption": "Flatten tensor 3×2 thành vector 1×6 bằng PyTorch."
+        },
+        {
+          "page": 68,
+          "asset_member": "illustration_module_cnn_p68.png",
+          "caption": "Bài tập convolution không bias với output 2×4 hoàn chỉnh."
+        },
+        {
+          "page": 70,
+          "asset_member": "illustration_module_cnn_p70.png",
+          "caption": "Bài tập convolution thêm bias 2."
+        },
+        {
+          "page": 76,
+          "asset_member": "illustration_module_cnn_p76.png",
+          "caption": "Bài tập zero-padding, stride 1 và output 5×3 hoàn chỉnh."
+        },
+        {
+          "page": 82,
+          "asset_member": "illustration_module_cnn_p82.png",
+          "caption": "Chuỗi convolution rồi max pooling trong một bài tập."
+        },
+        {
+          "page": 84,
+          "asset_member": "illustration_module_cnn_p84.png",
+          "caption": "Max pooling 2×2 trên ảnh xám 7×7."
+        }
+      ],
+      "page_text_supplements": {
+        "9": "Hạn chế của mạng fully connected với time-series: số lượng giá trị đầu vào có thể thay đổi, trong khi kiến trúc MLP đòi hỏi kích thước đầu vào cố định; càng nhiều loại input thì càng khó xử lý.",
+        "10": "Cần kiến trúc mạng phù hợp hơn với cấu trúc dữ liệu: RNN cho chuỗi tuần tự; CNN cho ảnh và video.",
+        "11": "Động lực của CNN được minh họa bằng hai ý: hệ thị giác xử lý thông tin qua các vùng tiếp nhận cục bộ; ảnh số được biểu diễn thành lưới pixel rồi đi qua chuỗi Dense/Convolution/Pooling để tạo biểu diễn ngày càng trừu tượng và đưa ra optical output.",
+        "13": "Các khối của CNN tạo pipeline Input → Convolution Layer → Activation Layer → Pooling Layer → … → Fully Connected Layer → Output. Sai số từ output được lan truyền ngược qua toàn bộ mạng bằng thuật toán tối ưu để cập nhật tham số.",
+        "14": "Một CNN phân loại ảnh đi qua nhiều nhóm CONV → ReLU, xen kẽ POOL để giảm kích thước; các feature map ở tầng sâu biểu diễn đặc trưng ngày càng trừu tượng, rồi tầng FC cho điểm các lớp car, truck, airplane, ship và horse.",
+        "17": "Phép nhân theo phần tử (Hadamard) giữa hai ma trận cùng kích thước dùng C[i,j]=A[i,j]×B[i,j]. Ví dụ A=[[1,2,3],[1,1,2],[2,3,1]], B=[[1,2,1],[2,1,1],[2,1,1]] cho C=[[1,4,3],[2,1,2],[4,3,1]]. Đây không phải phép nhân ma trận theo hàng–cột.",
+        "21": "Ví dụ PyTorch dùng input float32 kích thước 1×1×6×6 với ma trận [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1],[4,3,1,4,2,4],[2,0,0,4,3,4]]. Tạo nn.Conv2d(in_channels=1,out_channels=1,kernel_size=3,bias=False), đặt weight thành kernel [[1,1,0],[1,1,0],[1,0,1]], rồi tính output 4×4 [[9,13,9,13],[14,11,13,10],[12,17,11,14],[12,13,13,18]].",
+        "24": "Ví dụ PyTorch dùng input 1×1×6×6 [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1],[4,3,1,4,2,4],[2,0,0,4,3,4]]. Tạo nn.Conv2d(1,1,kernel_size=3), đặt weight thành kernel [[1,1,0],[1,1,0],[1,0,1]] và đặt conv_layer.bias=nn.Parameter(torch.tensor([1],dtype=torch.float32)). Output là [[10,14,10,14],[15,12,14,11],[13,18,12,15],[13,14,14,19]].",
+        "25": "Quy trình tích chập có bias trong PyTorch: input 1×1×6×6 là [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1],[4,3,1,4,2,4],[2,0,0,4,3,4]]; nn.Conv2d(1,1,kernel_size=3) dùng kernel [[1,1,0],[1,1,0],[1,0,1]] và bias 1; conv_layer(input) cho output 4×4 [[10,14,10,14],[15,12,14,11],[13,18,12,15],[13,14,14,19]].",
+        "28": "Ví dụ kernel chữ nhật trong PyTorch dùng cùng input 1×1×6×6 [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1],[4,3,1,4,2,4],[2,0,0,4,3,4]]. Tạo nn.Conv2d(1,1,kernel_size=(2,3)), đặt weight [[1,0,1],[0,1,1]] và bias 1. Output 5×4 là [[8,10,9,12],[6,11,6,8],[7,12,6,7],[11,8,14,9],[6,12,11,16]].",
+        "31": "Padding bổ sung phần tử ở trước và sau mỗi chiều của input (P_start, P_end) trước khi trượt kernel. Zero-padding cho phép bộ lọc xử lý cả pixel sát biên và có thể giữ nguyên kích thước không gian của feature map; với dữ liệu nhiều kênh, mỗi filter trải qua toàn bộ chiều sâu input rồi cộng bias để tạo một kênh output.",
+        "32": "Ví dụ padding='same': input 4×4 [[2,3,1,4],[1,1,3,2],[0,4,3,0],[3,2,2,0]], kernel [[1,1,1],[1,1,1],[0,1,0]], bias 1. nn.Conv2d(1,1,kernel_size=3,padding='same') giữ output 4×4: [[7,8,12,8],[8,16,18,11],[10,15,16,9],[10,15,12,6]].",
+        "34": "PyTorch cho phép padding là một số nguyên hoặc tuple. Với input 4×4 [[2,3,1,4],[1,1,3,2],[0,4,3,0],[3,2,2,0]], kernel [[1,1,1],[1,1,1],[0,1,0]], bias 1 và nn.Conv2d(1,1,kernel_size=3,padding=(2,1)), output 6×4 là [[3,4,2,5],[7,8,12,8],[8,16,18,11],[10,15,16,9],[10,15,12,6],[6,8,5,3]].",
+        "41": "Ví dụ stride trong PyTorch dùng input 1×1×6×6 [[1,0,1,3,1,3],[0,1,4,0,0,4],[0,2,0,3,3,2],[2,2,1,3,2,2],[1,3,0,3,1,0],[3,2,3,3,4,3]]. Tạo nn.Conv2d(1,1,kernel_size=3,stride=2), đặt kernel [[1,1,1],[1,1,1],[0,1,0]] và bias 1; output 2×2 là [[10,13],[11,16]].",
+        "43": "Ví dụ kết hợp padding và stride: input 4×4 [[0,3,1,1],[3,1,2,0],[3,4,2,3],[3,0,0,2]], kernel [[1,1,1],[1,1,1],[0,1,0]], bias 1. nn.Conv2d(1,1,kernel_size=3,padding=1,stride=(2,2)) cho output 2×2 [[7,8],[15,13]].",
+        "44": "Với input 4×4 [[0,3,1,1],[3,1,2,0],[3,4,2,3],[3,0,0,2]], nn.Conv2d(1,1,kernel_size=3,padding=1,stride=(2,2)), kernel [[1,1,1],[1,1,1],[0,1,0]] và bias 1 tạo output [[7,8],[15,13]]. Padding mở rộng input thành 6×6, còn stride 2 lấy các vị trí cửa sổ cách nhau hai ô.",
+        "45": "Với input M×N, padding (P,Q), kernel K×O và stride (S,T), kích thước sau padding là (M+2P)×(N+2Q); kích thước output là floor((M+2P−K)/S)+1 × floor((N+2Q−O)/T)+1. Slide in K ở cả hai tử số, nhưng theo chính ký hiệu kernel K×O thì tử số chiều rộng phải dùng O.",
+        "51": "Ví dụ max pooling dùng input 1×1×6×6 [[3,2,1,0,0,3],[0,3,3,1,1,0],[3,1,4,1,1,0],[2,4,1,1,0,4],[1,0,3,0,3,0],[3,4,4,3,3,4]]. nn.MaxPool2d(kernel_size=2) mặc định dùng stride 2, cho output 3×3 [[3,3,3],[4,4,4],[4,4,4]].",
+        "52": "Với cùng input 6×6 [[3,2,1,0,0,3],[0,3,3,1,1,0],[3,1,4,1,1,0],[2,4,1,1,0,4],[1,0,3,0,3,0],[3,4,4,3,3,4]], nn.MaxPool2d(kernel_size=2,stride=(1,2)) cho output 5×3 [[3,3,3],[3,4,1],[4,4,4],[4,3,4],[4,4,4]].",
+        "53": "nn.MaxPool1d(kernel_size=3,stride=3) áp dụng pooling một chiều dọc theo từng hàng của input 6×6 [[3,2,1,0,0,3],[0,3,3,1,1,0],[3,1,4,1,1,0],[2,4,1,1,0,4],[1,0,3,0,3,0],[3,4,4,3,3,4]], tạo output 6×2 [[3,3],[3,1],[4,1],[4,4],[3,3],[4,4]].",
+        "57": "Average pooling hai chiều trên input 6×6 [[3,2,1,0,0,3],[0,3,3,1,1,0],[3,1,4,1,1,0],[2,4,1,1,0,4],[1,0,3,0,3,0],[3,4,4,3,3,4]]: nn.AvgPool2d(kernel_size=(3,2),stride=(2,2)) cho output 2×3 [[2.0000,1.6667,0.8333],[1.8333,1.6667,1.3333]].",
+        "58": "nn.AvgPool1d(kernel_size=3,stride=3) lấy trung bình từng đoạn dài 3 trên mỗi hàng của input 6×6 [[3,2,1,0,0,3],[0,3,3,1,1,0],[3,1,4,1,1,0],[2,4,1,1,0,4],[1,0,3,0,3,0],[3,4,4,3,3,4]], cho output 6×2 [[2.0000,1.0000],[2.0000,0.6667],[2.6667,0.6667],[2.3333,1.6667],[1.3333,1.0000],[3.6667,3.3333]].",
+        "60": "Flatten trong PyTorch: input float32 kích thước 1×3×2 là [[[2,4],[3,1],[3,4]]]. flatten_layer=nn.Flatten() rồi flatten_layer(input) giữ batch dimension và gộp các chiều còn lại, tạo output 1×6 [[2,4,3,1,3,4]].",
+        "68": "Bài tập tích chập không bias: input 4×6 [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1]], kernel 3×3 [[1,1,0],[1,0,0],[0,0,0]], stride 1. Output 2×4 là [[4,7,5,8],[4,8,4,8]].",
+        "70": "Bài tập tích chập có bias: input 4×6 [[2,2,1,4,1,0],[0,4,0,3,3,4],[0,4,1,2,0,0],[2,1,4,1,3,1]], kernel [[1,1,0],[1,0,0],[0,0,0]], bias 2, stride 1. Output 2×4 là [[6,9,7,10],[6,10,6,10]].",
+        "76": "Bài tập padding: input 5×3 [[2,4,2],[3,3,4],[3,2,0],[4,0,4],[1,4,0]] được zero-pad 1 ô thành 7×5. Với kernel [[1,0,1],[1,1,1],[0,1,0]], bias 2 và stride 1, output 5×3 là [[11,13,12],[15,18,13],[14,14,11],[9,17,8],[7,15,6]].",
+        "79": "Bài tập dùng input 5×3 [[2,4,2],[3,3,4],[3,2,0],[4,0,4],[1,4,0]], zero-padding 1, kernel [[1,0,1],[1,1,1],[0,1,0]], bias 2 và stride 2. Hai hàng output được hiển thị là [[11,12],[14,11]]. Theo công thức kích thước, output đầy đủ phải là 3×2; tính cửa sổ hợp lệ cuối cho hàng [7,6], nên kết quả đầy đủ là [[11,12],[14,11],[7,6]].",
+        "82": "Bài tập Convolution + Pooling: input 5×3 [[2,4,2],[1,3,2],[3,2,1],[0,0,1],[0,0,1]], kernel 3×2 [[1,1],[1,0],[0,0]], bias 1, stride 1 cho feature map 3×2 [[8,10],[8,8],[6,4]]. MaxPooling với kernel 1×2 cho output 3×1 [[10],[8],[6]].",
+        "84": "MaxPooling 2×2 trên ảnh xám 7×7 [[0,0,0,0,0,0,0],[0,0,0,43,43,0,0],[0,30,250,230,125,251,0],[0,191,38,0,0,81,0],[0,241,0,35,119,250,0],[0,49,193,198,83,0,0],[0,0,0,0,0,0,0]] với stride mặc định 2 cho output 3×3 [[0,43,43],[191,250,251],[241,198,250]].",
+        "86": "Input ảnh xám 7×7 là [[0,0,0,0,0,0,0],[0,0,0,43,43,0,0],[0,30,250,230,125,251,0],[0,191,38,0,0,81,0],[0,241,0,35,119,250,0],[0,49,193,198,83,0,0],[0,0,0,0,0,0,0]]. Với phép cross-correlation dùng trong Conv2d và kernel [[1,0,-1],[1,0,-1],[1,0,-1]], output đúng 5×5 là [[-250,-243,82,22,168],[-288,-52,120,-59,168],[-288,197,44,-317,244],[-231,248,29,-98,202],[-193,57,-9,-17,202]]. Tài liệu hiển thị [[-250,-243,82,22,168],[-288,34,206,-59,168],[212,657,294,185,244],[-155,248,29,64,202],[-193,127,229,486,202]], nhưng nhiều ô không khớp phép tính từ input và kernel đã cho.",
+        "87": "MaxPooling kernel 2, stride mặc định 2 trên feature map đúng từ phép cross-correlation cho output 2×2 [[-52,120],[248,44]]. Nếu chỉ tiếp tục từ feature map được in trong tài liệu thì max pooling phải là [[34,206],[657,294]], không phải [[34,206],[657,297]] như ô cuối được in."
+      },
+      "illustration_caption": "Ma trận input, kernel và output minh họa trực quan phép tích chập.",
+      "entry": "AIO - Sao chép/6. Deep Learning/4. CNN/1. Giới thiệu về mạng tích chập CNN.pdf",
+      "output": "02_cnn.pdf"
+    },
+    {
+      "module_id": "module_transformer",
+      "title": "Kiến trúc Transformer",
+      "illustration_page": 53,
+      "page_text_supplements": {
+        "9": "Trong một ô RNN, hidden state mới và dự đoán được tính theo quy ước vector hàng trên slide: h_t = a_1(h_{t-1}W_h + x_tW_x + b_h) và ŷ_t = a_2(h_tW_y + b_y). h_{t-1} mang trí nhớ ngắn hạn từ bước trước; W_h, W_x và W_y là các ma trận trọng số, b_h và b_y là bias, còn a_1 và a_2 là các hàm kích hoạt.",
+        "17": "Các phương trình LSTM đầy đủ là: f_t = σ(W_f[h_{t-1},x_t] + b_f); i_t = σ(W_i[h_{t-1},x_t] + b_i); C̃_t = tanh(W_C[h_{t-1},x_t] + b_C); C_t = f_t ⊙ C_{t-1} + i_t ⊙ C̃_t; o_t = σ(W_o[h_{t-1},x_t] + b_o); h_t = tanh(C_t) ⊙ o_t. Ký hiệu [h_{t-1},x_t] là phép ghép vector và ⊙ là nhân theo phần tử.",
+        "24": "Khi huấn luyện Seq2Seq, chuỗi nguồn “tôi, đang, học, tiếng, anh” được embedding rồi đi tuần tự qua Encoder LSTM để tạo thought vector. Thought vector khởi tạo Decoder LSTM. Decoder nhận chuỗi đích dịch phải <START>, I, am, learning, English; tại mỗi bước nó sinh ŷ_1…ŷ_5 và tính loss J_1…J_5 so với nhãn thật tương ứng I, am, learning, English, <END>. Đây là teacher forcing: token đích thật ở bước trước được cấp làm đầu vào khi train.",
+        "25": "Khi suy luận Seq2Seq, encoder biến chuỗi nguồn “tôi, đang, học, tiếng, anh” thành thought vector. Decoder bắt đầu từ <START>, sinh I, rồi dùng chính token vừa dự đoán làm đầu vào cho bước kế tiếp để lần lượt sinh am, learning, English và dừng ở <END>. Khác với huấn luyện teacher forcing, suy luận là quá trình tự hồi quy nên sai số ở một bước có thể truyền sang các bước sau.",
+        "28": "Với query q_1 và bốn key k_1…k_4, scaled dot-product attention tạo vector điểm e = [q_1k_1^T/√d_k, q_1k_2^T/√d_k, q_1k_3^T/√d_k, q_1k_4^T/√d_k]. Chia cho √d_k giúp độ lớn dot product không tăng quá mạnh theo số chiều. Lưu ý lỗi in trên công thức phía phải của slide: hạng cuối lặp k_2; theo sơ đồ bốn key, hạng đúng là k_4, hoặc k_N trong dạng tổng quát.",
+        "29": "Sau khi tính các scaled dot-product score e_i = q_1k_i^T/√d_k, áp dụng α = softmax(e) để nhận attention distribution α_1…α_4; các trọng số không âm và có tổng bằng 1. Lưu ý lỗi in trong vector e trên slide: hạng cuối lặp k_2; với bốn key, hạng cuối đúng là q_1k_4^T/√d_k.",
+        "30": "Scaled dot-product attention thực hiện ba bước: e_i = q_1k_i^T/√d_k; α = softmax(e); và a = Σ_i α_i v_i. Vì vậy output là tổng có trọng số của các value, không phải của query. Sơ đồ dùng trường hợp giản lược v_i = k_i; đây không phải ràng buộc chung. Công thức vector e trên slide in nhầm hạng cuối thành k_2; với bốn key, hạng đúng là k_4.",
+        "31": "Công thức tổng quát là Attention(Q,K,V) = softmax(QK^T/√d_k)V. Sơ đồ chỉ lấy query q_1 để tạo output o_1 rồi đưa tới khối prediction/loss. Dòng K = V mô tả riêng ví dụ giản lược dùng cùng biểu diễn encoder làm key và value; attention nói chung không yêu cầu K và V bằng nhau.",
+        "32": "Cùng một khối scaled dot-product attention có thể xử lý đồng thời ma trận query Q gồm q_1…q_4 để sinh bốn output o_1…o_4: O = softmax(QK^T/√d_k)V. Mỗi hàng của softmax là phân phối attention cho một query. Dòng K = V chỉ là giả định của ví dụ trên slide, không phải điều kiện bắt buộc của attention.",
+        "33": "Ví dụ số dùng d_k=4, q_1=[0,1,0,0], k_1=[1,1,1,0], k_2=[1,0,1,1], k_3=[1,1,1,1], k_4=[1,1,0,0] và V=K. Các scaled score q_1k_i^T/√4 lần lượt là [0.5,0.0,0.5,0.5]. V=K chỉ là lựa chọn giản lược của ví dụ, không phải quy tắc chung.",
+        "34": "Áp dụng softmax cho scaled score [0.5,0.0,0.5,0.5] cho attention distribution xấp xỉ [0.28,0.16,0.28,0.28]; giá trị chính xác hơn là [0.2773,0.1682,0.2773,0.2773]. Các trọng số có tổng bằng 1 và sẽ dùng để trộn các value. Ví dụ đặt V=K chỉ để minh họa.",
+        "35": "Với attention distribution softmax([0.5,0.0,0.5,0.5]) và V=K, output là Σ_i α_iv_i = [1.0000,0.8318,0.7227,0.4455], được slide làm tròn thành [1.00,0.83,0.72,0.44]. Đây là tổng có trọng số theo từng chiều của bốn value.",
+        "36": "Tính attention cho cả bốn query tạo o_1=o_2=o_3=[1.0000,0.8318,0.7227,0.4455], vì q_1=q_2=q_3=[0,1,0,0]. Với q_4=[0,0,1,0], output là o_4=[1.0000,0.7227,0.8318,0.5545]. Ví dụ dùng V=K; đây không phải ràng buộc chung của attention.",
+        "37": "Demo PyTorch tạo query bằng torch.randint(high=2,size=(1,4,4),dtype=torch.float32), cho mẫu [[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,0,1,0]]]. Key được tạo cùng shape và mẫu hiển thị là [[[1,1,1,0],[1,0,1,1],[1,1,1,1],[1,1,0,0]]]; value=key. Lệnh F.scaled_dot_product_attention(query=query,key=key,value=value) trả tensor output [[[1.0000,0.8318,0.7227,0.4455],[1.0000,0.8318,0.7227,0.4455],[1.0000,0.8318,0.7227,0.4455],[1.0000,0.7227,0.8318,0.5545]]]. Slide đặt tên biến attentionn_weight, nhưng API này trả attention output đã nhân V, không trả attention weights; tên đúng nên là attention_output. Vì snippet dùng randint mà không đặt seed, các tensor cụ thể chỉ là một lần chạy minh họa.",
+        "41": "Trong self-attention, cùng một chuỗi embedding X được dùng làm nguồn để tạo query, key và value. Tuy nhiên câu QUERY = KEY = VALUE = EMBEDDED trên slide chỉ đúng ở mức nguồn đầu vào: thông thường có ba phép chiếu học được khác nhau, Q=XW_Q, K=XW_K và V=XW_V, nên các giá trị Q, K, V không nhất thiết bằng nhau.",
+        "42": "Ví dụ self-attention giản lược dùng ba token x_1=[1,1,1], x_2=[0,1,0], x_3=[0,0,0] và đặt trực tiếp q_i=k_i=v_i=x_i. Các vector 3 chiều này minh họa luồng dữ liệu; trong mô hình thực, q_i, k_i, v_i thường là các phép chiếu tuyến tính học được từ x_i.",
+        "43": "Với q_1=[1,1,1] và d_k=3, scaled score tới k_1,k_2,k_3 xấp xỉ [1.7,0.6,0.0], tương ứng 3/√3, 1/√3 và 0. Softmax cho attention weights được làm tròn thành [0.7,0.2,0.1].",
+        "44": "Với attention weights làm tròn [0.7,0.2,0.1] và v_1=[1,1,1], v_2=[0,1,0], v_3=[0,0,0], output của q_1 là 0.7v_1+0.2v_2+0.1v_3=[0.7,0.9,0.7].",
+        "45": "Với q_2=[0,1,0] và d_k=3, scaled score tới k_1,k_2,k_3 xấp xỉ [0.6,0.6,0.0]. Softmax cho attention weights được làm tròn thành [0.4,0.4,0.2].",
+        "46": "Với attention weights làm tròn [0.4,0.4,0.2], output của q_2 là 0.4v_1+0.4v_2+0.2v_3=[0.4,0.8,0.4].",
+        "47": "Vì q_3=[0,0,0], cả ba scaled score đều bằng 0. Softmax([0,0,0]) cho phân phối đều [1/3,1/3,1/3]. Slide làm tròn từng trọng số thành [0.3,0.3,0.3], nên tổng số đã làm tròn là 0.9; trọng số chính xác vẫn có tổng bằng 1.",
+        "48": "Với trọng số chính xác [1/3,1/3,1/3], output của q_3 là (v_1+v_2+v_3)/3=[1/3,2/3,1/3]. Slide dùng các trọng số đã làm tròn 0.3 nên hiển thị [0.3,0.6,0.3]; đây là sai khác do làm tròn, không phải attention distribution có tổng 0.9.",
+        "51": "Demo cài learned token embedding cộng learned positional embedding như sau:\nclass TokenAndPositionEmbedding(nn.Module):\n    def __init__(self, vocab_size, embed_dim, max_length, device='cpu'):\n        super().__init__()\n        self.device = device\n        self.word_emb = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embed_dim)\n        self.pos_emb = nn.Embedding(num_embeddings=max_length, embedding_dim=embed_dim)\n    def forward(self, x):\n        N, seq_len = x.size()\n        positions = torch.arange(0, seq_len).expand(N, seq_len).to(self.device)\n        output1 = self.word_emb(x)\n        output2 = self.pos_emb(positions)\n        output = output1 + output2\n        return output\nVới vocab_size=10000, embed_dim=200, max_length=50 và batch_size=32, input=torch.randint(high=2,size=(batch_size,max_length),dtype=torch.int64). embedded=embedding(input) có shape torch.Size([32,50,200]). Đây là positional embedding học được, không phải công thức sinusoid.",
+        "52": "Transformer encoder nhận Input Embedding cộng Positional Encoding rồi đi qua N encoder block. Mỗi block gồm Multi-Head Attention với residual Add & Norm, sau đó Feed Forward với residual Add & Norm. Trong multi-head attention, Q, K, V đi qua các linear projection; H scaled dot-product attention chạy song song, kết quả được concat rồi qua linear. Một scaled dot-product attention thực hiện MatMul(Q,K^T), Scale, optional Mask, Softmax rồi MatMul với V.",
+        "54": "Demo PyTorch đặt batch_size=1, seq_len=50, embedding_dim=200 rồi tạo input=torch.randint(high=2,size=(batch_size,seq_len,embedding_dim),dtype=torch.float32). Lớp attention là nn.MultiheadAttention(embed_dim=200,num_heads=5,batch_first=True). Gọi attn_output,attn_output_weights=att_layer(query=input,key=input,value=input) cho attn_output.shape=torch.Size([1,50,200]) và attn_output_weights.shape=torch.Size([1,50,50]). Với thiết lập mặc định, PyTorch đã trung bình attention weights qua các head; muốn giữ chiều head riêng cần average_attn_weights=False.",
+        "56": "Layer normalization chuẩn hóa m đặc trưng của từng mẫu/token i: μ_i=(1/m)Σ_{j=1}^m x_{ij}; σ_i²=(1/m)Σ_{j=1}^m(x_{ij}-μ_i)²; x̂_{ij}=(x_{ij}-μ_i)/√(σ_i²+ε). ε tránh chia cho 0. Công thức trên slide là lõi chuẩn hóa; nn.LayerNorm của PyTorch mặc định còn có hệ số affine học được γ và β.",
+        "57": "Position-wise feed-forward network ánh xạ độc lập từng token từ x∈R^{d_model} lên biểu diễn ẩn y∈R^{d_ff}, áp dụng phi tuyến, rồi chiếu trở lại x̂∈R^{d_model}. Việc quay về d_model cho phép cộng residual với đầu vào trước khi normalization.",
+        "58": "Một encoder block post-norm được cài như sau:\nclass TransformerEncoder(nn.Module):\n    def __init__(self, embed_dim, num_heads, ff_dim, dropout=0.1):\n        super().__init__()\n        self.attn = nn.MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads, batch_first=True)\n        self.ffn = nn.Sequential(\n            nn.Linear(in_features=embed_dim, out_features=ff_dim, bias=True),\n            nn.ReLU(),\n            nn.Linear(in_features=ff_dim, out_features=embed_dim, bias=True)\n        )\n        self.layernorm_1 = nn.LayerNorm(normalized_shape=embed_dim, eps=1e-6)\n        self.layernorm_2 = nn.LayerNorm(normalized_shape=embed_dim, eps=1e-6)\n        self.dropout_1 = nn.Dropout(p=dropout)\n        self.dropout_2 = nn.Dropout(p=dropout)\n    def forward(self, query, key, value):\n        attn_output, _ = self.attn(query, key, value)\n        attn_output = self.dropout_1(attn_output)\n        out_1 = self.layernorm_1(query + attn_output)\n        ffn_output = self.ffn(out_1)\n        ffn_output = self.dropout_2(ffn_output)\n        out_2 = self.layernorm_2(out_1 + ffn_output)\n        return out_2\nKhởi tạo TransformerEncoder(embed_dim=200,num_heads=5,ff_dim=1024). Với embedded.shape=torch.Size([32,50,200]) và self-attention encoded=encoder_layer(embedded,embedded,embedded), output encoded.shape vẫn là torch.Size([32,50,200]). Code minh họa một block, chưa truyền padding/attention mask.",
+        "62": "class TransformerEncoder(nn.Module):\n    def __init__(self, embed_dim, num_heads, ff_dim, dropout=0.1):\n        super().__init__()\n        self.attn = nn.MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads, batch_first=True)\n        self.ffn = nn.Sequential(\n            nn.Linear(in_features=embed_dim, out_features=ff_dim, bias=True),\n            nn.ReLU(),\n            nn.Linear(in_features=ff_dim, out_features=embed_dim, bias=True)\n        )\n        self.layernorm_1 = nn.LayerNorm(normalized_shape=embed_dim, eps=1e-6)\n        self.layernorm_2 = nn.LayerNorm(normalized_shape=embed_dim, eps=1e-6)\n        self.dropout_1 = nn.Dropout(p=dropout)\n        self.dropout_2 = nn.Dropout(p=dropout)\n    def forward(self, query, key, value):\n        attn_output, _ = self.attn(query, key, value)\n        attn_output = self.dropout_1(attn_output)\n        out_1 = self.layernorm_1(query + attn_output)\n        ffn_output = self.ffn(out_1)\n        ffn_output = self.dropout_2(ffn_output)\n        out_2 = self.layernorm_2(out_1 + ffn_output)\n        return out_2\nĐây là một post-norm encoder block: residual rồi LayerNorm sau attention, tiếp theo residual rồi LayerNorm sau feed-forward. Snippet chưa truyền padding/attention mask.",
+        "63": "Learning curves trong khoảng 50 epoch cho thấy training accuracy tăng từ khoảng 0.71 lên 0.95, còn evaluation accuracy tăng nhanh tới khoảng 0.84–0.845 rồi đi ngang và giảm nhẹ còn khoảng 0.83. Training loss giảm liên tục từ khoảng 0.66 xuống 0.14, trong khi evaluation loss giảm tới khoảng 0.37–0.38 rồi tăng mạnh lên khoảng 0.57. Khoảng cách mở rộng giữa train và evaluation là dấu hiệu overfitting; checkpoint/early stopping nên dựa trên evaluation loss trước khi nó tăng."
+      },
+      "additional_illustrations": [
+        {
+          "page": 24,
+          "asset_member": "illustration_module_transformer_p24.png",
+          "caption": "Teacher forcing trong Seq2Seq: encoder nén chuỗi nguồn, decoder nhận chuỗi đích dịch phải và tính loss ở từng bước."
+        },
+        {
+          "page": 52,
+          "asset_member": "illustration_module_transformer_p52.png",
+          "caption": "Toàn bộ luồng Transformer encoder, từ embedding và positional encoding tới multi-head attention, scaled dot-product attention, residual Add & Norm và feed-forward."
+        },
+        {
+          "page": 63,
+          "asset_member": "illustration_module_transformer_p63.png",
+          "caption": "Learning curves cho thấy train tiếp tục cải thiện trong khi evaluation loss tăng và evaluation accuracy chững lại, biểu hiện overfitting."
+        }
+      ],
+      "illustration_caption": "Multi-head Attention tách các nhánh Q, K, V rồi ghép kết quả bằng phép concat.",
+      "entry": "AIO - Sao chép/6. Deep Learning/5. Transformer/90. Giới thiệu kiến trúc Transformer.pdf",
+      "output": "03_transformer.pdf"
+    },
+    {
+      "module_id": "module_unet",
+      "title": "U-Net cho phân đoạn ảnh",
+      "illustration_page": 42,
+      "illustration_caption": "Kiến trúc U-Net với encoder, decoder và các skip connection.",
+      "page_text_supplements": {
+        "5": "Khác với phân loại một nhãn cho toàn ảnh, bài toán segmentation nhận ảnh có cả chó và mèo rồi trả về một bản đồ không gian: vùng chó, vùng mèo và nền được tách ở mức điểm ảnh.",
+        "6": "Mặt nạ phân đoạn trên slide mã hóa từng điểm ảnh: `0` là background, `1` là vùng dog và `2` là vùng cat. Vì vậy đầu ra giữ cùng bố cục không gian với ảnh đầu vào.",
+        "7": "Bốn dạng đầu ra được đối chiếu trên cùng cảnh đàn cừu: image recognition gán nhãn hoặc xác suất cho toàn ảnh; object detection đặt hộp cho từng vật thể; semantic segmentation tô cùng màu cho mọi vật thể cùng lớp; instance segmentation dùng màu khác nhau để tách từng cá thể dù chúng cùng lớp.",
+        "8": "Slide đặt LeNet, AlexNet, VGG và ResNet quanh khối MODEL như các kiến trúc phân loại được cân nhắc cho đầu ra segmentation theo điểm ảnh.",
+        "11": "Slide nhấn mạnh `Input Image shape ≠ Input Model shape`: ảnh đầu vào thực tế có thể không trùng kích thước cố định mà mô hình phân loại tiền huấn luyện yêu cầu.",
+        "12": "Các feature map VGG16 ở Conv2 và Conv3 được hiển thị theo từng channel; trên ảnh chó và mèo, nhiều channel làm nổi các đường biên và cấu trúc cục bộ khác nhau.",
+        "13": "Các feature map VGG16 ở Conv4 và Conv5 tiếp tục được tách theo channel; từng channel phản hồi ở các vùng khác nhau của chó và mèo, với biểu diễn sâu hơn và thưa hơn so với Conv2–Conv3.",
+        "14": "Kiến trúc encoder–decoder trên slide ghép hai nửa: Encoder nén dần ảnh thành biểu diễn nhỏ hơn ở giữa; Decoder mở rộng dần biểu diễn đó trở lại bản đồ không gian ở phía đầu ra.",
+        "15": "Ví dụ encoder–decoder hiển thị ba ảnh song song: ảnh máy bay đầu vào đã denormalize, GT Mask là đường viền mục tiêu và Prediction là các vùng dự đoán màu đỏ hoặc cam để so sánh với mặt nạ thật.",
+        "16": "U-Net có nhánh co dùng các `Conv 3×3 + ReLU` và `Max Pool 2×2`, nhánh mở dùng `Up Conv 2×2` rồi `Conv 3×3 + ReLU`. Các skip connection ngang nối feature map ở cùng độ phân giải từ encoder sang decoder; số kênh tăng `64→128→256→512→1024` ở đáy và giảm đối xứng về bản đồ phân đoạn 2 kênh.",
+        "17": "Với input `M×N`, kernel `K×O`, padding `(P,Q)`, stride `(S,T)`, kích thước convolution trên slide là `floor((M+2P-K)/S)+1` theo chiều cao và `floor((N+2Q-O)/T)+1` theo chiều rộng; bias được cộng sau tổng tích chập.",
+        "19": "Ví dụ đối chiếu kích thước: convolution ánh xạ ma trận `4×4` thành đầu ra `2×2 [[7,8],[15,13]]`; transposed convolution nhận chính ma trận `2×2` đó và tạo lại một lưới `4×4`. Sơ đồ thể hiện phép chuyển vị của toán tử theo chiều kích thước.",
+        "20": "Với input `[[2,2],[1,4]]` và kernel `2×2` toàn số 1, mỗi phần tử input rải một khối `2×2` đã nhân trọng số; các vùng chồng lấp được cộng. Kết quả transposed convolution là `[[2,4,2],[3,9,6],[1,5,4]]`.",
+        "21": "Demo tạo input bằng `torch.randint(5, (1,2,2), dtype=torch.float32)`, nhận tensor `[[[2.,2.],[1.,4.]]]`. Lớp là `nn.ConvTranspose2d(in_channels=1,out_channels=1,kernel_size=2,bias=False)`; toàn bộ weight được đặt bằng `torch.ones(conv_layer.weight.data.shape)`. `output=conv_layer(input)` cho `[[[2.,4.,2.],[3.,9.,6.],[1.,5.,4.]]]`.",
+        "22": "Giữ input `[[2,2],[1,4]]` và kernel `2×2` toàn số 1, đầu ra không bias là `[[2,4,2],[3,9,6],[1,5,4]]`. Khi `bias=1`, mọi phần tử tăng thêm 1 và đầu ra thành `[[3,5,3],[4,10,7],[2,6,5]]`.",
+        "23": "Demo đặt `nn.ConvTranspose2d(in_channels=1,out_channels=1,kernel_size=2,bias=True)`, weight toàn số 1 và `conv_layer.bias=nn.Parameter(torch.tensor([1], dtype=torch.float32))`. Với input `[[[2.,2.],[1.,4.]]]`, output là `[[[3.,5.,3.],[4.,10.,7.],[2.,6.,5.]]]`.",
+        "24": "Từ đầu ra cơ sở `[[2,4,2],[3,9,6],[1,5,4]]`, `padding=(1,1)` của ConvTranspose2d cắt một hàng hoặc cột ở mỗi biên và chỉ còn `[[9]]`; `padding=(1,0)` cắt theo chiều cao nhưng không cắt chiều rộng, cho `[[3,9,6]]`.",
+        "25": "Demo dùng input `[[[2.,2.],[1.,4.]]]`, weight `2×2` toàn số 1 và `bias=False`. Với `nn.ConvTranspose2d(1,1,kernel_size=2,padding=1)`, output là `[[[9.]]]`; đổi thành `padding=(1,0)` thì output là `[[[3.,9.,6.]]]`.",
+        "26": "Với input `[[2,2],[1,4]]` và kernel `2×2` toàn số 1: `stride=(1,1)` cho `[[2,4,2],[3,9,6],[1,5,4]]`, còn `stride=(2,2)` tách các khối đóng góp và cho ma trận `4×4 [[2,2,2,2],[2,2,2,2],[1,1,4,4],[1,1,4,4]]`.",
+        "27": "Demo đặt `nn.ConvTranspose2d(in_channels=1,out_channels=1,kernel_size=2,stride=2,bias=False)`, weight toàn số 1. Với input `[[[2.,2.],[1.,4.]]]`, output là `[[[2.,2.,2.,2.],[2.,2.,2.,2.],[1.,1.,4.,4.],[1.,1.,4.,4.]]]`.",
+        "28": "Kết hợp `stride=(2,2)` và `padding=(1,1)`: transposed convolution trước hết tạo ma trận `4×4 [[2,2,2,2],[2,2,2,2],[1,1,4,4],[1,1,4,4]]`, sau đó padding cắt biên và còn output `2×2 [[2,2],[1,4]]`.",
+        "29": "Demo đặt `nn.ConvTranspose2d(in_channels=1,out_channels=1,kernel_size=2,stride=2,padding=1,bias=False)`, weight toàn số 1. Với input `[[[2.,2.],[1.,4.]]]`, output có đúng kích thước `2×2` và bằng `[[[2.,2.],[1.,4.]]]`.",
+        "30": "Với input `M×N`, kernel `K×O`, stride `S×T` và padding `P×Q`, slide ghi chính xác kích thước ConvTranspose2d: `H_out=(M-1)×S-2P+(K-1)+1` và `W_out=(N-1)×T-2Q+(O-1)+1`. Ví dụ `stride=(2,2)`, `padding=(1,1)`, kernel `2×2` biến input `2×2` thành output `2×2`.",
+        "31": "Với hai kênh input và hai kernel `2×2` toàn số 1, `stride=(2,2)`, đóng góp của kênh 1 là `[[0,0,1,1],[0,0,1,1],[3,3,0,0],[3,3,0,0]]`, của kênh 2 là `[[1,1,1,1],[1,1,1,1],[2,2,4,4],[2,2,4,4]]`; cộng theo kênh cho output `[[1,1,2,2],[1,1,2,2],[5,5,4,4],[5,5,4,4]]`.",
+        "32": "Demo tạo input shape `(2,2,2)`, dùng `nn.ConvTranspose2d(in_channels=2,out_channels=1,kernel_size=2,stride=2,bias=False)` và đặt cả hai kernel bằng 1. Hai kênh `[[[0,1],[3,0]], [[1,1],[2,4]]]` cho output `[[[1,1,2,2],[1,1,2,2],[5,5,4,4],[5,5,4,4]]]`.",
+        "33": "Sơ đồ U-Net đầy đủ có bốn mức max-pooling trên encoder, đáy 1024 kênh, bốn up-convolution trên decoder và bốn skip connection ngang. Mỗi mức dùng hai `Conv 3×3 + ReLU`; đầu ra cuối cùng là bản đồ segmentation 2 kênh cùng độ phân giải với input.",
+        "34": "ConvBlock gồm hai chuỗi liên tiếp: `Conv2d(in_channels,out_channels,kernel_size=3,padding=1,bias=False) → BatchNorm2d(out_channels) → ReLU(inplace=True)`, rồi `Conv2d(out_channels,out_channels,kernel_size=3,padding=1,bias=False) → BatchNorm2d(out_channels) → ReLU(inplace=True)`. Demo `ConvBlock(1,64)` nhận input shape `(1,1,256,256)` và trả `torch.Size([1,64,256,256])`.",
+        "35": "Encoder là `nn.Sequential(nn.MaxPool2d(2), ConvBlock(in_channels,out_channels))`. Demo `Encoder(in_channels=64,out_channels=128)` nhận input shape `(1,64,256,256)`, giảm một nửa cả chiều cao và chiều rộng rồi trả `torch.Size([1,128,128,128])`.",
+        "36": "Trang trực quan hóa hiển thị bốn channel mẫu ở mỗi Encoder Block 1, 2, 3 và 4; sơ đồ bên trái đánh dấu lần lượt bốn tầng trên nhánh co để liên hệ các feature map với độ sâu encoder.",
+        "37": "Decoder dùng `nn.ConvTranspose2d(in_channels,out_channels,kernel_size=4,stride=2,padding=1)`, rồi `ConvBlock(in_channels,out_channels)`. Trong forward: `x1=self.conv_trans(x1)`; `x=torch.cat([x2,x1],dim=1)`; `x=self.conv_block(x)`. Demo `Decoder(128,64)` nhận x1 shape `(1,128,128,128)` và skip x2 shape `(1,64,256,256)`, trả `torch.Size([1,64,256,256])`.",
+        "38": "Trang trực quan hóa hiển thị bốn channel mẫu ở mỗi Decoder Block 1, 2, 3 và 4; sơ đồ bên phải đánh dấu lần lượt bốn tầng upsampling trên nhánh mở của U-Net.",
+        "39": "Luồng U-Net hoàn chỉnh là `input → ConvBlock 64 → Encoder 128→256→512→1024 → Decoder 512→256→128→64 → Conv 1×1 ra 2 lớp`. Ở mỗi decoder, feature đã upsample được ghép theo chiều kênh với skip feature cùng kích thước từ encoder.",
+        "41": "Các box đúng theo quy ước `C×H×W` là `64×256×256`, `128×128×128`, `256×64×64`, `512×32×32` và output `2×256×256`. Riêng box đáy trên slide ghi `16×1024×1024`, nhưng thứ tự này mâu thuẫn với chính quy ước `C×H×W` và code triển khai của mô hình; bottleneck đúng là `1024×16×16`.",
+        "43": "Lớp UNet dùng `in_conv=ConvBlock(n_channels,64)`; encoder lần lượt `(64,128),(128,256),(256,512),(512,1024)`; decoder lần lượt `(1024,512),(512,256),(256,128),(128,64)`; `out_conv=nn.Conv2d(64,n_classes,kernel_size=1)`. Forward lưu x1 đến x5, rồi gọi `dec_1(x5,x4)`, `dec_2(x,x3)`, `dec_3(x,x2)`, `dec_4(x,x1)`, cuối cùng out_conv. Demo `UNet(n_channels=1,n_classes=2)` nhận input `torch.randint(5,(4,1,256,256),dtype=torch.float32)` và trả predictions shape `torch.Size([4,2,256,256])`."
+      },
+      "additional_illustrations": [
+        {
+          "page": 7,
+          "asset_member": "illustration_module_unet_p07.png",
+          "caption": "Phân biệt nhận dạng ảnh, phát hiện vật thể, semantic segmentation và instance segmentation trên cùng một cảnh."
+        },
+        {
+          "page": 16,
+          "asset_member": "illustration_module_unet_p16.png",
+          "caption": "Kiến trúc U-Net đối xứng với nhánh encoder, decoder và skip connection ở từng mức độ phân giải."
+        }
+      ],
+      "entry": "AIO - Sao chép/6. Deep Learning/7. UNet/113.1 UNet Slide.pdf",
+      "output": "04_unet.pdf"
+    },
+    {
+      "module_id": "module_gan",
+      "title": "Generative Adversarial Network (GAN)",
+      "illustration_page": 24,
+      "illustration_caption": "Vòng huấn luyện đối kháng giữa Generator và Discriminator cùng các đường cập nhật loss.",
+      "page_text_supplements": {
+        "8": "Không gian tiềm ẩn có thể được lấy mẫu theo `z ~ N(0,1)` hoặc `z ~ U(-1,1)`. Các vector z khác nhau được đưa qua cùng mạng sinh G: `z=(0.3, 0.2, -0.6, ...)` tạo một chiếc cốc xanh, tròn; `z=(-0.1, 0.1, 0.2, ...)` tạo một chiếc cốc vàng, cao.",
+        "16": "Binary cross-entropy trên slide được viết theo hai trường hợp: nếu `y=0` thì `L(ŷ)=-log(1-ŷ)`; nếu `y=1` thì `L(ŷ)=-log(ŷ)`. Dạng gộp là `L(y,ŷ)=-y log(ŷ)-(1-y)log(1-ŷ)`.",
+        "17": "Khi huấn luyện G, giữ D cố định và gán ảnh sinh nhãn mục tiêu `y=1`. Slide dùng `criterion = nn.BCELoss()`, `real_labels = torch.ones(imgs.shape[0], 1)`, `z = torch.randn((imgs.shape[0], latent_dim))`, `gen_imgs = generator(z)`, `G_loss = criterion(discriminator(gen_imgs), real_labels)`. Với `ŷ=D(G(z))`, loss là `L_G(z)=-log(ŷ)`.",
+        "18": "D vẫn được giữ cố định khi cập nhật G. Slide lấy nhiễu chuẩn và tối ưu ảnh giả theo nhãn thật: `criterion = nn.BCELoss()`, `real_labels = torch.ones(imgs.shape[0], 1)`, `z = torch.randn((imgs.shape[0], latent_dim))`, `gen_imgs = generator(z)`, `G_loss = criterion(discriminator(gen_imgs), real_labels)`. Do đó `L_G(z)=-log(D(G(z)))`.",
+        "19": "Khi huấn luyện D, giữ G cố định; dữ liệu thật mang `y=1` và dữ liệu sinh mang `y=0`: `criterion = nn.BCELoss()`, `real_labels = torch.ones(imgs.shape[0], 1)`, `fake_labels = torch.zeros(imgs.shape[0], 1)`, `z = torch.randn((imgs.shape[0], latent_dim))`, `gen_imgs = generator(z)`, `real_loss = criterion(discriminator(real_imgs), real_labels)`, `fake_loss = criterion(discriminator(gen_imgs.detach()), fake_labels)`, `D_loss = (real_loss + fake_loss) / 2`. Công thức trên slide: `L_D(z,x)=-y log(D(x))-(1-y)log(1-D(G(z)))`.",
+        "20": "Discriminator của Standard GAN làm phẳng ảnh `32×32` thành 1024 phần tử rồi đi qua `1024→512→256→1`. Mã lớp tuần tự trên slide: `nn.Linear(int(np.prod(img_shape)), 512)`, `nn.LeakyReLU(0.2, inplace=True)`, `nn.Linear(512, 256)`, `nn.LeakyReLU(0.2, inplace=True)`, `nn.Linear(256, 1)`, `nn.Sigmoid()`.",
+        "21": "Generator của Standard GAN ánh xạ `latent_dim→256→512→1024→32×32`. Ba tầng ẩn lần lượt dùng `BatchNorm1d(256/512/1024)` rồi `LeakyReLU(0.2, inplace=True)`; tầng cuối là `nn.Linear(1024, 32*32)` và `nn.Tanh()`. Trong forward: `img = self.model(z)`, `img = img.view(img.size(0), 1, 32, 32)`, `return img`.",
+        "26": "Mã cập nhật Generator trên slide dùng BCE và Adam với `lr=0.0001`. Trong mỗi batch: tạo `real_labels = torch.ones(imgs.shape[0], 1)` và `fake_labels = torch.zeros(imgs.shape[0], 1)`; gọi `optimizer_G.zero_grad()`; lấy `z = torch.randn((imgs.shape[0], latent_dim))`; tạo `gen_imgs = generator(z)`; tính `G_loss = criterion(discriminator(gen_imgs), real_labels)`; rồi `G_loss.backward()` và `optimizer_G.step()`.",
+        "27": "Mã cập nhật Discriminator trên slide dùng BCE và Adam với `lr=0.0002`. Trong mỗi batch: `real_labels = torch.ones(imgs.shape[0], 1)`, `fake_labels = torch.zeros(imgs.shape[0], 1)`, `optimizer_D.zero_grad()`, `z = torch.randn((imgs.shape[0], latent_dim))`, `gen_imgs = generator(z)`; sau đó `real_loss = criterion(discriminator(real_imgs), real_labels)`, `fake_loss = criterion(discriminator(gen_imgs.detach()), fake_labels)`, `D_loss = (real_loss + fake_loss) / 2`; cuối cùng `D_loss.backward()` và `optimizer_D.step()`.",
+        "33": "Kiến trúc DCGAN trên slide: Generator nhận vector 100 chiều, Linear thành `(128,8,8)`, reshape rồi upsample thành `(128,16,16)`, tiếp tục thành `(64,32,32)` và xuất ảnh `(1,32,32)`. Discriminator đi ngược: `(1,32,32) → Conv stride=2: (16,16,16) → (32,8,8) → (64,4,4) → (128,2,2)`, Flatten thành `128×2×2` rồi Dense ra một xác suất.",
+        "34": "Trong DCGAN, ảnh thật từ tập huấn luyện và ảnh sinh từ Generator cùng đi vào Discriminator. Nhãn mục tiêu của D là `Real=1` cho ảnh thật và `Generated=0` cho ảnh sinh.",
+        "35": "Bước huấn luyện D trên dữ liệu thật đưa ảnh thật vào Discriminator, so sánh đầu ra với nhãn `Real=1`, rồi chỉ cập nhật D để tăng `p(y=“real image”|x)`.",
+        "36": "Bước huấn luyện D trên dữ liệu giả giữ Generator cố định: lấy z, tạo Generated Image, đưa ảnh này vào D với nhãn `Generated=0`, tính loss và chỉ cập nhật D.",
+        "37": "Bước huấn luyện Generator giữ Discriminator cố định: z đi qua G tạo ảnh giả, D đánh giá ảnh đó nhưng loss dùng nhãn mục tiêu `Real=1`; gradient quay về để chỉ cập nhật G.",
+        "38": "Mục tiêu minimax của DCGAN trên slide là `min_G max_D V(D,G) = E_{x~p_data(x)}[log D(x)] + E_{z~p_z(z)}[log(1-D(G(z)))]`. Ảnh thật và ảnh sinh đều đi vào cùng Discriminator.",
+        "39": "Mã DCGAN đặt `self.init_size=8` và `self.fc=nn.Linear(latent_dim, 128*8*8)`. Generator reshape x thành `(batch,128,8,8)`, rồi dùng `BatchNorm2d(128)`, `Upsample(scale_factor=2)`, `Conv2d(128,128,3,padding=1)`, `BatchNorm2d(128)`, `LeakyReLU(0.2)`, `Upsample(scale_factor=2)`, `Conv2d(128,64,3,padding=1)`, `BatchNorm2d(64,)`, `LeakyReLU(0.2)`, `Conv2d(64,channels,kernel_size=3,padding=1)`, `Tanh`. Discriminator dùng bốn `Conv2d` với `kernel_size=3`, `stride=2`, `padding=1` và số kênh `channels→16→32→64→128`, mỗi tầng theo sau bởi `LeakyReLU(0.2)`; sau đó flatten và `nn.Linear(128*2*2,1)`, `nn.Sigmoid()`.",
+        "40": "Mã huấn luyện Generator DCGAN dùng `criterion=nn.BCELoss()`, `Adam(generator.parameters(), lr=0.0001)`, `real_labels=torch.ones(imgs.shape[0],1)`, `optimizer_G.zero_grad()`, `z=torch.randn((imgs.shape[0],latent_dim))`, `gen_imgs=generator(z)`, `G_loss=criterion(discriminator(gen_imgs),real_labels)`, rồi backward và `optimizer_G.step()`.",
+        "41": "Mã huấn luyện Discriminator DCGAN dùng Adam với `lr=0.0002`; nhãn thật là ones và nhãn giả là zeros. Sau `z=torch.randn((imgs.shape[0],latent_dim))` và `gen_imgs=generator(z)`, slide tính `real_loss` trên `real_imgs`, `fake_loss` trên `gen_imgs.detach()`, `D_loss=(real_loss+fake_loss)/2`, rồi backward và `optimizer_D.step()`.",
+        "42": "Sơ đồ cập nhật D cho thấy ảnh thật và ảnh sinh cùng vào Discriminator, loss chỉ hồi truyền để Update D. Mã dùng `z=torch.randn((imgs.shape[0],latent_dim))`; ảnh giả được detach khi tính `fake_loss`; `D_loss=(real_loss+fake_loss)/2` trước backward và `optimizer_D.step()`.",
+        "43": "Sơ đồ cập nhật G cho thấy `z→Generator→Generated Image→Discriminator→Loss`, nhưng đường gradient Update G quay về Generator. Mã dùng BCE, Adam cho G với `lr=0.0001`, `real_labels=ones`, `z=torch.randn((imgs.shape[0],latent_dim))`, `G_loss=criterion(discriminator(gen_imgs),real_labels)`, rồi backward và `optimizer_G.step()`.",
+        "44": "D muốn `D(x)→1` và `D(G(z))→0`, với mục tiêu `max_D (1/m)Σ_i[log D(x^(i)) + log(1-D(G(z^(i))))]`. Với G, slide đặt hai lựa chọn tương ứng: `min_G (1/m)Σ_i log(1-D(G(z^(i))))` hoặc `max_G (1/m)Σ_i log(D(G(z^(i))))`. Hai hướng gradient được ghi là `-∇_{θ_g}(1/m)Σ_i log(1-D(G(z^(i))))` hoặc `∇_{θ_g}(1/m)Σ_i log(D(G(z^(i))))`; mục đích là làm D khó phân biệt và đẩy `D(G(z))→1`.",
+        "49": "Trong cGAN, cùng một tín hiệu điều kiện được cấp vào cả Generator và Discriminator: G sinh dữ liệu theo điều kiện, còn D đánh giá thật hoặc giả khi biết chính điều kiện đó.",
+        "50": "Nhãn lớp được nhúng thành vector rồi ghép với z trước khi vào G: `label_emb = nn.Embedding(num_classes, emb_dim)`, `label_vector = self.label_emb(label)`, `x = torch.cat([z, label_vector], 1)`. Sơ đồ minh họa nhãn số 0 được đưa đồng thời vào G và D; D so sánh ảnh số 0 được sinh với ảnh thật số 0 để dự đoán Real hoặc Fake.",
+        "51": "Loss Generator có điều kiện là `L_G(z,y)=-log(D(G(z|y)))`. Mã slide dùng BCE, Adam cho G với `lr=0.0001`, `real_labels=torch.ones((imgs.shape[0],1))`, `optimizer_G.zero_grad()`, `z=torch.randn((imgs.shape[0],latent_dim))`, `gen_imgs=generator(z,labels)`, `validity=discriminator(gen_imgs,labels)`, `G_loss=criterion(validity,real_labels)`, rồi backward và step.",
+        "52": "Loss Discriminator có điều kiện là `L_D(z,x,y)=-y log(D(x|y))-(1-y)log(1-D(G(z|y)))`. Mã dùng BCE, Adam cho D với `lr=0.0002`, nhãn ones hoặc zeros, `z=torch.randn((imgs.shape[0],latent_dim))`, `gen_imgs=generator(z,labels)`, `real_validity=discriminator(real_imgs,labels)`, `fake_validity=discriminator(gen_imgs.detach(),labels)`, `D_loss=(real_loss+fake_loss)/2`, rồi backward và step.",
+        "53": "Generator cGAN tạo `self.label_emb=nn.Embedding(num_classes,emb_dim)`, ghép `cond=self.label_emb(label)` với z bằng `torch.cat([z,cond],1)`, rồi đưa qua MLP `100+emb_dim→256→512→1024→32*32`. Ba tầng ẩn dùng `BatchNorm1d` và `LeakyReLU(0.2, inplace=True)`; đầu ra dùng Tanh. Cuối forward: `img=self.model(x)`; `img=img.view(img.size(0),*img_shape)`; `return img`.",
+        "54": "Discriminator cGAN tạo `self.label_emb=nn.Embedding(num_classes,emb_dim)`, làm phẳng ảnh rồi ghép embedding nhãn: `img_flat=img.view(img.size(0),-1)`; `cond=self.label_emb(label)`; `x=torch.cat([img_flat,cond],1)`. MLP có kích thước `32*32+emb_dim→512→256→1`, dùng `LeakyReLU(0.2, inplace=True)` ở hai tầng ẩn và Sigmoid ở đầu ra; `validity=self.model(x)`."
+      },
+      "additional_illustrations": [
+        {
+          "page": 33,
+          "asset_member": "illustration_module_gan_p33.png",
+          "caption": "Kiến trúc DCGAN: Generator tăng dần độ phân giải không gian, còn Discriminator giảm kích thước bằng các convolution stride 2."
+        },
+        {
+          "page": 55,
+          "asset_member": "illustration_module_gan_p55.png",
+          "caption": "Hai pha huấn luyện cGAN: cập nhật G bằng nhãn mục tiêu 1, rồi cập nhật D với ảnh giả nhãn 0 và ảnh thật nhãn 1, trong cả hai pha đều truyền điều kiện y."
+        }
+      ],
+      "entry": "AIO - Sao chép/6. Deep Learning/8. GAN/131. GAN Slide.pdf",
+      "output": "05_gan.pdf"
+    },
+    {
+      "module_id": "module_vae",
+      "title": "Variational Autoencoder (VAE)",
+      "illustration_page": 47,
+      "illustration_caption": "Reparameterization trick μ + σε trong luồng encoder, latent space và decoder.",
+      "page_text_supplements": {
+        "4": "Slide ví autoencoder như một quy trình nén rồi giải nén: ảnh `zebra.jpg` ở đầu vào x đi qua khối ZIP để tạo mã nén `zebra.zip`; khối UNZIP biến mã này thành đầu ra x′, minh họa bằng một ảnh `zebra.jpg` được tái tạo.",
+        "6": "Sơ đồ nhận một ảnh số bị nhiễu (Noisy Input), dùng encoder nén ảnh vào Latent Space z ở nút thắt cổ chai (Bottleneck) để giữ các đặc trưng liên quan nhất, rồi decoder tái tạo một phiên bản sạch hơn của ảnh gốc (Clean Output).",
+        "7": "Luồng `Input Data (Images) → Encoder → Latent Representation → Decoder → Reconstructed Data (Images)` cho thấy biểu diễn ẩn hữu ích có thể mô tả Number of strokes, Number of angles và Number of connections. Slide đối chiếu điều này với cách con người học viết thay vì tô từng điểm ảnh xám.",
+        "8": "Từ biểu diễn ẩn mô tả số nét, số góc và số kết nối, sơ đồ rẽ sang ba công dụng: Classification, Feature Extraction và Essential features. Nhánh decoder–ảnh tái tạo được khoanh là ràng buộc của tập dữ liệu (Constraint of the dataset).",
+        "9": "Nếu số chiều latent bằng số chiều ảnh, mô hình có xu hướng ghi nhớ dữ liệu đầu vào; nếu latent nhỏ hơn nhiều, nó chỉ giữ thông tin hữu ích. Slide tiếp tục minh họa các đặc trưng ẩn như số nét, số góc, số kết nối và ba nhánh sử dụng: phân loại, trích xuất đặc trưng, đặc trưng thiết yếu.",
+        "10": "Slide đối chiếu hai decoder. Nhánh không buộc trọng số dùng `Encoder (W) → Latent Feature → Decoder (V)` và cho ảnh ra “More Different”. Nhánh buộc trọng số dùng `Encoder (W) → Latent Feature → Decoder (W^T)`, trong đó `W^T` được ghi rõ là Weight Tied, và cho ảnh tái tạo “More Similar”.",
+        "11": "Ví dụ autoencoder bất đối xứng trên slide có chuỗi kích thước cụ thể `Input (50) → Layer (40) → Latent (20) → Layer (30) → Layer (35) → Output (50)`: phía encoder có một lớp trước latent, còn phía decoder có hai lớp trước đầu ra.",
+        "14": "Slide đưa hai cách tính reconstruction loss. Với đầu ra tuyến tính: `Z = np.maximum(0, np.dot(X, W_enc) + b_enc)`, `X_hat = np.dot(Z, W_dec) + b_dec`, rồi `recon_loss = np.mean((X_hat - X)**2)`. Với đầu vào đã ở `[0, 1]`, decoder tạo `X_hat_logits = np.dot(Z, W_dec) + b_dec`, áp sigmoid `X_hat = 1 / (1 + np.exp(-X_hat_logits))`, đặt `epsilon = 1e-7`, rồi tính `bce_loss = -np.mean(X * np.log(X_hat + epsilon) + (1 - X) * np.log(1 - X_hat + epsilon))`. Encoder và decoder có thể là MLP hoặc CNN đơn giản.",
+        "18": "Kiến trúc convolutional autoencoder trên slide biến ảnh `28×28×1` qua encoder `Conv 3×3 + ReLU → Max-Pool 2×2 → Conv 3×3 + ReLU → Max-Pool 2×2`, thu code nút thắt `1×1×64`. Decoder dùng `Conv Transpose 7×7 + ReLU → Conv Transpose 3×3 + ReLU → Conv Transpose 3×3 + Sigmoid` để trở về ảnh `28×28×1`; hai hàng ví dụ đặt ảnh gốc cạnh ảnh tái tạo.",
+        "19": "Encoder PyTorch là `nn.Sequential(nn.Conv2d(1, 16, 3, padding=1), nn.ReLU(), nn.MaxPool2d(kernel_size=(2,2), stride=(2,2)), nn.Conv2d(16, 32, 3, stride=1), nn.ReLU(), nn.MaxPool2d(kernel_size=(2,2), stride=(2,2)), nn.Conv2d(32, 64, 6))`. Các kích thước được ghi lần lượt là `(16, 28, 28)`, `(16, 14, 14)`, `(32, 12, 12)`, `(32, 6, 6)` và `(64, 1, 1)`.",
+        "20": "Decoder PyTorch là `nn.Sequential(nn.ConvTranspose2d(64, 32, 7), nn.ReLU(), nn.ConvTranspose2d(32, 16, 3, stride=2, padding=1, output_padding=1), nn.ReLU(), nn.ConvTranspose2d(16, 1, 3, stride=2, padding=1, output_padding=1), nn.Sigmoid())`. Các nhãn kích thước trên slide lần lượt ghi `(32, 7, 7, 7)`, `(16, 14, 14)` và `(1, 28, 28)`. Nhãn đầu có thừa một chiều 7 ngay trong nguồn; kích thước tensor PyTorch phù hợp với kiến trúc là `(32, 7, 7)`.",
+        "21": "Slide khởi tạo `model = Convolution_Autoencoder().cuda()`, gọi `summary(model, (1, 28, 28))`, dùng `loss_function = nn.MSELoss()` và `optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)`. Công thức là `MSE = (1/N) Σ_{i=1}^N (y_i - ŷ_i)^2`; bảng tóm tắt báo `Total params: 183,745` và `Trainable params: 183,745`.",
+        "22": "Hạn chế được minh họa là các giá trị trong code z của autoencoder mang tính ngẫu nhiên và không có ý nghĩa (The value are random and have no meaning), dù encoder–decoder vẫn tái tạo được từng đầu vào như ngựa vằn, trứng hoặc ô tô.",
+        "24": "Thay vì một code gồm các con số rời rạc không mang nghĩa, sơ đồ VAE đặt các mẫu ô tô và ngựa vằn vào không gian z. Chú thích trọng tâm của slide là latent space biểu diễn các tham số của một phân phối đa biến; encoder ánh xạ x vào vùng z và decoder dùng vùng này để tạo x′.",
+        "25": "Sơ đồ phân biệt biến quan sát x với biến ẩn z: các ảnh ô tô và ngựa vằn là dữ liệu quan sát, còn z là một vector code. Hai nút μ và σ² cùng trỏ vào z, cho thấy biểu diễn ẩn được mô tả bằng tham số trung bình và phương sai thay vì chỉ một mã điểm duy nhất.",
+        "27": "Các công cụ toán trên slide liệt kê kỳ vọng dưới dạng `E_x[f(x)] = ∫ x f(x) dx`, quy tắc chuỗi `P(x,y) = P(x|y)P(y)` và Bayes `P(x|y) = P(y|x)P(x)/P(y)`. Biểu thức kỳ vọng đầu tiên bị ghi sai ký hiệu trong nguồn; dạng tổng quát đúng là `E[f(X)] = ∫ f(x)p(x)dx`. KL liên tục được viết đúng là `D_KL(P||Q) = ∫ p(x) log(p(x)/q(x)) dx`; nó không đối xứng, luôn không âm và bằng 0 khi và chỉ khi `P = Q`.",
+        "28": "Ví dụ phân loại đưa logits `[3.2, 1.3, 0.2, 0.8]` qua `S(y_i) = exp(y_i) / Σ_{j=1}^n exp(y_j)` để nhận xác suất `[0.775, 0.116, 0.039, 0.070]` cho Dog, Cat, Horse, Cheetah. Slide so sánh phân phối này S với đích one-hot `T = [1,0,0,0]` bằng `D_KL(P||Q) = Σ_{x∈X} P(x) log(P(x)/Q(x))`.",
+        "31": "Trung bình số học của các tỉ lệ `1`, `1/4`, `4` là `(1 + 1/4 + 4)/3 = 1.75` và bị số lớn làm lệch. Slide yêu cầu một hàm thỏa `f(4)=y`, `f(1/4)=-y`; đồng nhất thức `log_b(b^x)=x` dẫn từ tổng các tỉ lệ `Σ_x P(X)/Q(X)` sang tổng log-tỉ lệ `Σ_x log(P(X)/Q(X))`.",
+        "32": "Đồ thị log được chọn vì có thể cho hai tỉ lệ nghịch đảo độ lớn đối nhau: `f(4)=y` và `f(1/4)=-y`, đồng thời đi qua `f(1)=0`. Ba đường `log₂x`, `log_e x` và `log₁₀x` đều đi qua `(1,0)`; mỗi đường đạt giá trị 1 lần lượt tại `x=2`, `x=e`, `x=10`.",
+        "33": "Trên trục số thường, `1/8` là “8 lần nhỏ hơn 1” và `8` là “8 lần lớn hơn 1”, nhưng khoảng cách quanh 1 không đối xứng. Trên trục log cơ số 2, `1/8 = 2^-3`, `1/4 = 2^-2`, `1/2 = 2^-1`, `1 = 2^0`, `2 = 2^1`, `4 = 2^2`, `8 = 2^3`; hai phía trở thành đối xứng tại 0. Slide nhấn mạnh log cô lập số mũ, chẳng hạn `log₂(2³)=3`.",
+        "34": "Slide hoàn thiện phép đo bằng cách chuyển từ trung bình tỉ lệ `(1/n) Σ_x P(x)/Q(x)` sang trung bình log-tỉ lệ `(1/n) Σ_x log(P(x)/Q(x))`, rồi dùng xác suất `P(x)` làm trọng số để thu được biểu thức `Σ_x P(x) log(P(x)/Q(x))`.",
+        "35": "Kỳ vọng rời rạc được viết `E(x) = Σ_{i=1}^n x_i P(x_i)`, còn trường hợp liên tục là `E(X) = ∫_{-∞}^{∞} x·p(x) dx`. Đường thẳng dọc trên biểu đồ phân phối đánh dấu expectation: giá trị trung bình có trọng số của biến ngẫu nhiên sau nhiều lần lặp thí nghiệm.",
+        "36": "Ví dụ joint distribution có `p(X=1,Y=1)=0.1`, `p(X=1,Y=2)=0.2`, `p(X=2,Y=1)=0.3`, `p(X=2,Y=2)=0.4`. Lấy biên theo Y cho `p(X=1)=0.1+0.2=0.3` và `p(X=2)=0.3+0.4=0.7`.",
+        "37": "Từ joint distribution `p(x,z)`, hai phân phối biên được lấy bằng tích phân theo biến còn lại: `p(x) = ∫ p(x,z) dz` và `p(z) = ∫ p(x,z) dx`. Hình nhiệt hai chiều minh họa joint distribution, còn các histogram ở mép trên và mép phải là hai marginal tương ứng.",
+        "38": "Xác suất có điều kiện của dữ liệu khi biết latent được tính từ joint và marginal của latent: `P(x|z) = P(x,z) / P(z)`. Trên hình joint hai chiều, một lát cắt ngang theo một giá trị z minh họa phân phối có điều kiện này.",
+        "39": "Posterior của latent khi biết dữ liệu được tính bằng `P(z|x) = P(x,z) / P(x)`. Slide minh họa bằng một lát cắt dọc tại một giá trị x trên joint distribution; mẫu theo lát dọc tạo phân phối của z có điều kiện trên x.",
+        "41": "Giữa phân phối dữ liệu `p(x)` và phân phối latent `p(z)`, mũi tên `P(z|x)` đi từ x sang z, còn mũi tên `P(x|z)` đi từ z về x. Câu hỏi được đặt ra là làm thế nào xác định được toàn bộ phân phối latent `P(z)`.",
+        "42": "Để cố định phân phối latent trong sơ đồ hai chiều `P(z|x)` và `P(x|z)`, slide giả định prior của không gian ẩn là phân phối chuẩn tắc: `P(z) = N(0,1)`.",
+        "43": "Posterior thật được thay bằng một phân phối gần đúng: `p(z|x) ≈ q(z|x)`, trong đó slide đặt `q(z|x) = N(μ,σ)`. Sơ đồ vẫn giữ hai hướng: suy diễn `P(z|x)` từ dữ liệu sang latent và sinh `P(x|z)` từ latent về dữ liệu.",
+        "44": "VAE nhận x; probabilistic encoder `q_φ(z|x)` xuất mean μ và standard deviation σ. Mẫu latent được tạo bằng `z = μ + σ ⊙ ε` với `ε ~ N(0,I)`, rồi probabilistic decoder `p_θ(x|z)` tạo x′. z là biểu diễn nén ít chiều của đầu vào và mục tiêu tái tạo trên slide là `x ≈ x′`.",
+        "45": "Ở mức phân phối, sơ đồ đặt `p(x)` ở phía dữ liệu và `p(z)` ở phía latent. Encoder ánh xạ từ `p(x)` sang hai tham số μ và σ để đi tới `p(z)`; decoder tạo chiều ngược lại từ `p(z)` về `p(x)`.",
+        "46": "Sơ đồ generalized VAE cho encoder xuất μ và σ, dùng chúng xác định `N(μ,σ)`, lấy mẫu z từ phân phối này rồi đưa z vào decoder. Câu hỏi trọng tâm của slide là làm sao lan truyền ngược qua thao tác lấy mẫu ngẫu nhiên.",
+        "47": "Reparameterization tách nhiễu khỏi tham số encoder: lấy `ε ~ N(0,1)`, rồi tạo `z = μ + σε` trước khi đưa vào decoder. Nhờ vậy randomness nằm ở ε, còn đường tính từ μ và σ đến z được biểu diễn tường minh để thực hiện backpropagation.",
+        "48": "Likelihood dữ liệu được viết bằng marginalization `p(x) = ∫ p(x,z) dz` và được đánh dấu Intractable. Theo chain rule, slide viết `p(x) = p(x,z) / p(z|x)`. Sơ đồ “con gà–quả trứng” nêu vòng phụ thuộc: muốn `p(x)` tractable cần `p(z|x)` tractable, nhưng muốn `p(z|x) = p(x,z)/p(x)` tractable lại cần `p(x)` tractable.",
+        "49": "Posterior thật `pθ(z|x)` không thể tính trực tiếp vì bất khả giải (intractable) và được tham số hóa bởi θ. VAE dùng posterior xấp xỉ `qφ(z|x)`, tham số hóa bởi φ, sao cho `pθ(z|x) ≈ qφ(z|x)`.",
+        "50": "Bắt đầu từ `log pθ(x)`, nhân với `∫qφ(z|x)dz=1` rồi đưa vào kỳ vọng: `log pθ(x)=E_{qφ(z|x)}[log pθ(x)]=E_{qφ(z|x)}[log(pθ(x,z)/pθ(z|x))]`. Nhân trong log với `qφ(z|x)/qφ(z|x)`, tách kỳ vọng và dùng định nghĩa KL thu được `log pθ(x)=E_{qφ(z|x)}[log(pθ(x,z)/qφ(z|x))]+D_KL(qφ(z|x)||pθ(z|x))`, trong đó `D_KL≥0`.",
+        "51": "Vì `D_KL(qφ(z|x)||pθ(z|x))≥0`, suy ra `log pθ(x) ≥ E_{qφ(z|x)}[log(pθ(x,z)/qφ(z|x))]`. Vế phải là ELBO, Evidence Lower Bound. Slide minh họa bằng `Total Compensation = Base Salary + Bonus`, với `Bonus≥0` nên `Total Compensation≥Base Salary`.",
+        "52": "Dùng quy tắc dây chuyền `pθ(x,z)=pθ(x|z)pθ(z)`, ELBO được tách thành `L(θ,φ,x)=E_{qφ(z|x)}[log pθ(x|z)]−D_KL(qφ(z|x)||pθ(z))`. Cực đại ELBO tương ứng với cực đại likelihood tái tạo của decoder và cực tiểu khoảng cách giữa phân phối latent đã học với prior; slide chỉ mũi tên tối ưu bằng stochastic gradient descent.",
+        "53": "Với mẫu `x^(i)`, ELBO là `L(θ,φ;x^(i))=−D_KL(qφ(z|x^(i))||pθ(z))+E_{qφ(z|x^(i))}[log pθ(x^(i)|z)]`. Slide nêu bộ ước lượng gradient Monte Carlo kiểu score-function cho gradient theo φ; các mẫu `z^(l)~qφ(z|x^(i))`. Bộ ước lượng này có phương sai rất cao nên không thực tế cho mục đích đang xét.",
+        "54": "Reparameterization đưa nguồn ngẫu nhiên sang ε: lấy `ε~p(ε)`, đặt `z=g(φ,x,ε)`. Khi đó `L(θ,φ,x)=E_{qφ(z|x)}[log(pθ(x,z)/qφ(z|x))]=E_{p(ε)}[log(pθ(x,z)/qφ(z|x))]`, và một mẫu cho ước lượng `L̃(θ,φ,x)=log(pθ(x,z)/qφ(z|x))`. Sau biến đổi, loss có thể backprop qua z tới φ, còn ε là nút ngẫu nhiên tách rời.",
+        "55": "Hàm mục tiêu VAE là `L(x)=E_{q(z|x)}[log p(x|z)]−KL(q(z|x)||p(z))`. Hạng `E[log p(x|z)]` là data reconstruction, đo độ chính xác khi tái tạo ảnh gốc từ biểu diễn mã hóa. Hạng KL là regularization, ép phân phối latent gần một phân phối chuẩn.",
+        "56": "Encoder xuất μ và σ, lấy `z~N(μ,σ)`, rồi decoder tái tạo `X*`. Loss trên slide là `||X−X*||² + KL(N(μ,σ),N(0,1))`: hạng đầu giữ lại cùng thông tin gốc, hạng sau buộc phân phối latent giống phân phối chuẩn `N(0,1)`.",
+        "57": "Với `q(z|x)=N(μ,σ²)`, `p(z)=N(0,1)` và `D_KL(q||p)=E_q[log(q(z)/p(z))]`, slide khai triển `log q(z)=−1/2[log(2π)+log σ²+(z−μ)²/σ²]` và `log p(z)=−1/2[log(2π)+z²]`, từ đó `D_KL=1/2(μ²+σ²−log σ²−1)`.",
+        "58": "Encoder học hai đầu ra μ và `log(σ²)`; lấy `ε~N(0,1)`, rồi decoder nhận latent được lấy mẫu. Slide ghi rõ ưu tiên học `log(σ²)` vì đại lượng này có thể âm, nên mô hình không phải bị ép chỉ sinh các giá trị dương cho phương sai.",
+        "59": "Autoencoder thường nhận x, encoder qφ nén thành bottleneck z — một biểu diễn chiều thấp — rồi decoder fθ tái tạo x′. Mục tiêu trực quan trên slide là đầu vào và đầu ra lý tưởng giống nhau: `x≈x′`.",
+        "60": "Denoising autoencoder bắt đầu từ đầu vào gốc x, phá hủy một phần để tạo x̃, đưa x̃ qua encoder qφ, bottleneck z và decoder fθ, nhưng đích tái tạo vẫn là `x′≈x` chứ không phải bản x̃ bị nhiễu.",
+        "61": "Slide đối chiếu hai mô hình: autoencoder xác định dùng encoder, latent z, decoder và reconstruction loss; variational autoencoder dùng probabilistic encoder `qφ(z|x)`, xuất mean và variance, lấy mẫu latent z, rồi probabilistic decoder `pθ(x|z)`, với loss gồm reconstruction loss + KL divergence.",
+        "62": "Luồng VAE đầy đủ trên slide: `x → probabilistic encoder qφ(z|x) → mean μ và độ lệch chuẩn σ → z=μ+σ⊙ε` với `ε~N(0,I) → probabilistic decoder pθ(x|z) → x′`; mục tiêu lý tưởng là `x≈x′`. z là biểu diễn nén, chiều thấp của đầu vào.",
+        "63": "Encoder có `fc1=Linear(input_dim,hidden_dim)`, `fc_mu=Linear(hidden_dim,latent_dim)`, `fc_logvar=Linear(hidden_dim,latent_dim)`. Forward tính `h=relu(fc1(x))`, `mu=fc_mu(h)`, `logvar=fc_logvar(h)` và trả về `(mu,logvar)`. Ví dụ có μ=[0.1,1.2,0.2,0.8,…], σ=[0.2,0.5,0.8,1.3,…] và một vector lấy mẫu [0.28,1.65,0.92,1.98,…].",
+        "64": "Decoder có `fc1=Linear(latent_dim,hidden_dim)` và `fc2=Linear(hidden_dim,output_dim)`. Trong `forward(z)`, tính `h=relu(fc1(z))`, sau đó `x_hat=sigmoid(fc2(h))` và trả về `x_hat`. Decoder đóng vai trò `pθ(x|z)`, nhận sampled latent vector z để tái tạo x′.",
+        "65": "Hàm loss trong slide: `BCE=binary_cross_entropy(x_hat,x,reduction='sum')`; `KLD=−0.5·sum(1+logvar−mu.pow(2)−logvar.exp())`; trả về `BCE+KLD`. BCE cộng qua các phần tử tái tạo, còn KLD là hạng phân kỳ KL của latent.",
+        "66": "Lớp VAE ghép `Encoder(input_dim,hidden_dim,latent_dim)` với `Decoder(latent_dim,hidden_dim,input_dim)`. Forward: `(mu,logvar)=encoder(x)`; `std=exp(0.5·logvar)`; `eps=randn_like(std)`; `z=mu+eps*std`; `x_hat=decoder(z)`; trả về `(x_hat,mu,logvar)`. ε là biến chuẩn độc lập và `z=μ+σ*ε` là bước reparameterization.",
+        "68": "Để xem ảnh tái tạo: đặt `vae.eval()` và `torch.no_grad()`; lấy một batch x từ train_loader, dàn x thành `(-1,input_dim)`, gọi `x_hat,_,_=vae(x)`, rồi reshape cả x và x_hat thành `(-1,28,28)`. Slide vẽ lưới 2×10: hàng trên là Input và hàng dưới là Output tương ứng.",
+        "69": "Sinh ảnh mới không cần input: trong `torch.no_grad()`, lấy `z=torch.randn(10,latent_dim)`, tính `sample=vae.decoder(z)`, reshape sample thành `(-1,28,28)`, rồi hiển thị 10 ảnh grayscale. Các ảnh chữ số trên slide đến trực tiếp từ decoder của các mẫu latent chuẩn ngẫu nhiên.",
+        "71": "Kiến trúc review trên slide: input 784 → fully connected + ReLU → hidden 400; từ hidden tách hai fully connected ra μ 20 chiều và σ 20 chiều; reparameterization tạo latent 20 chiều; sau đó fully connected + ReLU → hidden 400 → fully connected + Sigmoid → output 784.",
+        "72": "Trong CVAE sinh ảnh theo nhãn, encoder nhận đồng thời Image và Label, rồi xuất μ và `log σ²`. Lấy `ε~N(0,I)` để tạo z. Decoder nhận cả z và cùng Label đó, sau đó sinh Image. Nhãn vì vậy điều kiện hóa cả phía mã hóa lẫn phía giải mã.",
+        "73": "Encoder CVAE theo nhãn có `fc1=Linear(28*28+10,400)`, vì ghép ảnh dàn phẳng với nhãn one-hot 10 chiều; hai đầu ra `fc2_mean=Linear(400,latent_dim)` và `fc2_logvar=Linear(400,latent_dim)`. Forward ghép `x.view(-1,28*28)` với labels, qua `ReLU(fc1)`, rồi trả về mean và logvar.",
+        "74": "Decoder CVAE có `fc1=Linear(latent_dim+10,400)` và `fc2=Linear(400,28*28)`. Forward ghép z với labels theo chiều cuối, tính `x=ReLU(fc1(z))`, `x=Sigmoid(fc2(x))`, rồi trả về `x.view(-1,28,28)`. Nhãn được đưa trực tiếp vào decoder cùng latent vector.",
+        "75": "Lớp CVAE tạo `Encoder(latent_dim)` và `Decoder(latent_dim)`. `reparameterize(mean,logvar)` tính `std=exp(0.5*logvar)`, `eps=randn_like(std)`, rồi trả `mean+eps*std`. Forward cho `(x,labels)` qua encoder để lấy mean và logvar, tạo z bằng reparameterization, cho `(z,labels)` qua decoder, rồi trả `(recon_x,mean,logvar)`.",
+        "76": "Loss CVAE: `BCE=binary_cross_entropy(recon_x.view(-1,28*28),x.view(-1,28*28),reduction='sum')`; `KL_div=−0.5*torch.sum(1+logvar−mean.pow(2)−logvar.exp())`; trả về `BCE+KL_div`. Slide chú thích đây là `−0.5·sum(1+log(σ²)−μ²−σ²)`.",
+        "77": "Hàm `generate_image(model,label,latent_dim=20)` đặt model ở eval mode và dùng `torch.no_grad()`; lấy `z=torch.randn(1,latent_dim)`; tạo nhãn one-hot bằng `torch.eye(10)[label].unsqueeze(0)`; gọi `model.decoder(z,label_one_hot)`, chuyển CPU hoặc NumPy và reshape 28×28. Vòng lặp `label in range(10)` sinh một ảnh cho từng nhãn 0–9.",
+        "78": "Kết quả chạy cùng hàm sinh có điều kiện cho mọi nhãn 0–9: mỗi lần lấy latent z ngẫu nhiên, ghép nhãn one-hot tương ứng và gọi decoder để tạo ảnh 28×28. Lưới trên slide cho thấy các ảnh chữ số sinh ra được điều khiển theo nhãn, dù nét còn thô và một số mẫu chưa rõ.",
+        "80": "CVAE text-to-image thay nhãn lớp bằng biểu diễn Text. Encoder nhận cả Image và Text, xuất μ và `log σ²`; lấy `ε~N(0,I)` để tạo z. Decoder nhận z cùng biểu diễn Text rồi sinh Image. Text vì vậy điều kiện hóa cả encoder lẫn decoder.",
+        "81": "Tạo `text_labels=['zero','one','two','three','four','five','six','seven','eight','nine']`; tokenize từng nhãn bằng `nltk.word_tokenize`. Huấn luyện `Word2Vec(sentences=tokenized_labels,vector_size=10,window=1,min_count=1,sg=0)`, rồi lấy `label_embeddings={label:word2vec_model.wv[label] for label in text_labels}`. Mỗi từ số được biểu diễn bằng một vector 10 chiều để điều kiện hóa CVAE.",
+        "82": "Encoder text-conditioned có `fc1=Linear(28*28+embed_dim,400)`, `fc2_mean=Linear(400,latent_dim)`, `fc2_logvar=Linear(400,latent_dim)`. Forward ghép `x.view(-1,28*28)` với `label_emb`, qua `ReLU(fc1)`, rồi trả mean và logvar. Embedding văn bản thay cho nhãn one-hot 10 chiều.",
+        "83": "Decoder text-conditioned có `fc1=Linear(latent_dim+embed_dim,400)` và `fc2=Linear(400,28*28)`. Forward ghép z với embedding văn bản, qua `ReLU(fc1)`, `Sigmoid(fc2)`, rồi trả `x.view(-1,28,28)`.",
+        "84": "Lớp CVAE text-conditioned tạo `Encoder(latent_dim,embed_dim)` và `Decoder(latent_dim,embed_dim)`. `reparameterize(mean,logvar)` tính `std=exp(0.5*logvar)`, `eps=randn_like(std)`, trả `mean+eps*std`. Forward cho `(x,label_emb)` qua encoder để lấy mean và logvar, tạo z, cho `(z,label_emb)` qua decoder để lấy recon_x, rồi trả `(recon_x,mean,logvar)`.",
+        "85": "Loss của CVAE text-to-image giữ nguyên hai hạng: `BCE=binary_cross_entropy(recon_x.view(-1,28*28),x.view(-1,28*28),reduction='sum')`; `KL_div=−0.5*torch.sum(1+logvar−mean.pow(2)−logvar.exp())`; trả về `BCE+KL_div`.",
+        "86": "Case 1 sinh ảnh từ điều kiện bằng prior chuẩn: tạo `label_tensor=torch.tensor([label])`; đặt `mu=zeros(1,vae.latent_dim)` và `logvar=zeros(1,vae.latent_dim)`, tương ứng mean 0 và standard deviation 1; lấy `z=vae.reparameterize(mu,logvar)`, rồi `generated_image=vae.decode(z,label_tensor)`. Ví dụ gọi `generate_images_using_random_z_and_label(2)`.",
+        "87": "Hàm `generate_image(model,label_text,latent_dim=20)` chuyển từ số viết bằng chữ sang Word2Vec embedding: `label_emb=torch.tensor(label_embeddings[label_text],dtype=float32).unsqueeze(0)`. Sau đó lấy `z=torch.rand(1,latent_dim).to(device)`, tức mẫu đều trên `[0,1)`, gọi `model.decoder(z,label_emb)`, chuyển về CPU hoặc NumPy và reshape 28×28. Vòng lặp qua `text_labels` sinh ảnh cho zero đến nine.",
+        "88": "Một lần chạy Case 1 cho điều kiện 2: đặt `μ=0` và `logvar=0`, reparameterize để lấy z từ prior chuẩn, rồi `decode(z,label_tensor)`. Slide hiển thị một ảnh grayscale sinh ra có tiêu đề `Generated Image for Label 2`.",
+        "89": "Biến thể sinh chỉ từ label dùng thống kê latent trung bình: `mu_test=mu.mean(dim=0)` rồi reshape thành `(1,20)`; `logvar_test=logvar.mean(dim=0)` rồi reshape thành `(1,20)`. Với `label_tensor`, lấy `z=vae.reparameterize(mu_test,logvar_test)`, rồi `generated_image=vae.decode(z,label_tensor)`. Ví dụ gọi `generate_images_using_label_only(2)` và sinh một ảnh số 2."
+      },
+      "additional_illustrations": [
+        {
+          "page": 18,
+          "asset_member": "illustration_module_vae_p18.png",
+          "caption": "Convolutional autoencoder MNIST: ảnh 28×28 được nén thành code 1×1×64 rồi giải mã bằng ba lớp tích chập chuyển vị."
+        },
+        {
+          "page": 33,
+          "asset_member": "illustration_module_vae_p33.png",
+          "caption": "Trục log cơ số 2 biến các tỉ lệ nghịch đảo quanh 1 thành khoảng cách đối xứng quanh 0."
+        },
+        {
+          "page": 44,
+          "asset_member": "illustration_module_vae_p44.png",
+          "caption": "Luồng VAE: encoder sinh μ và σ, reparameterization tạo z, decoder xác suất tái tạo x′."
+        },
+        {
+          "page": 52,
+          "asset_member": "illustration_module_vae_p52.png",
+          "caption": "ELBO gồm phần thưởng tái tạo trừ chi phí KL so với prior."
+        },
+        {
+          "page": 61,
+          "asset_member": "illustration_module_vae_p61.png",
+          "caption": "Từ autoencoder xác định sang VAE: encoder phân phối và thêm KL divergence."
+        },
+        {
+          "page": 71,
+          "asset_member": "illustration_module_vae_p71.png",
+          "caption": "VAE fully connected cho MNIST: 784→400→(μ20,σ20)→z20→400→784."
+        },
+        {
+          "page": 72,
+          "asset_member": "illustration_module_vae_p72.png",
+          "caption": "CVAE điều kiện hóa cả encoder và decoder bằng nhãn lớp."
+        },
+        {
+          "page": 78,
+          "asset_member": "illustration_module_vae_p78.png",
+          "caption": "CVAE sinh một ảnh MNIST cho từng nhãn 0–9."
+        },
+        {
+          "page": 80,
+          "asset_member": "illustration_module_vae_p80.png",
+          "caption": "CVAE text-to-image: embedding văn bản điều kiện hóa cả encoder và decoder."
+        },
+        {
+          "page": 87,
+          "asset_member": "illustration_module_vae_p87.png",
+          "caption": "Sinh chữ số MNIST từ các điều kiện văn bản zero đến nine."
+        }
+      ],
+      "entry": "AIO - Sao chép/6. Deep Learning/9. VAE/132. VAE.pdf",
+      "output": "06_vae.pdf"
+    },
+    {
+      "module_id": "module_gnn",
+      "title": "Graph Neural Network (GNN)",
+      "illustration_page": 36,
+      "page_text_supplements": {
+        "4": "Các hình trên slide chia ứng dụng GNN thành sáu kiểu dữ liệu hoặc bài toán: Physics, Molecule, Image, Text, Social Network và Generation. Sáu tác vụ minh họa ở bên phải là Graph Classification, Node Classification, Link Prediction, Community Detection, Graph Embedding và Graph Generation.",
+        "6": "Slide minh họa ba cách tạo graph. Các bảng Movies, Tags, Users và Ratings được biến thành graph dị thể với user node, movie node và các cạnh user–movie qua rating. Ảnh được chia thành lưới pixel, mỗi pixel trở thành một node của grid graph. Với node classification, mỗi hàng của feature matrix X là vector đặc trưng của một node; graph có node đã gán lớp 0 hoặc 1 và các node chưa có nhãn cần dự đoán.",
+        "12": "Ví dụ molecule-as-graph dùng caffeine, tên hóa học 1,3,7-trimethylxanthine, công thức `C8H10N4O2`. Hình phân tử dùng ký hiệu C=carbon, H=hydrogen, N=nitrogen, O=oxygen và CH3=methyl radical; cùng cấu trúc được biểu diễn thành adjacency matrix 14×14 và graph model, trong đó liên kết hóa học tạo các cạnh giữa node.",
+        "15": "Bảng thống kê graph thực tế: karate club, social network: 1 graph, 34 nodes, 78 edges, degree mean 4.5, max 17; qm9, small molecules: 134k graphs, không quá 9 nodes, không quá 26 edges, degree min 1, mean 2, max 5; Cora, citation network: 1 graph, 23,166 nodes, 91,500 edges, degree min 1, mean 7.8, max 379; Wikipedia links English, knowledge graph: 1 graph, 12M nodes, 378M edges, degree mean 62.24, max 1M. Các ô min trống ở karate club và Wikipedia không được suy diễn thêm.",
+        "34": "Ví dụ NetworkX tạo directed graph `H = nx.DiGraph()`. Bốn node có thuộc tính: node 0 màu purple, size 250; node 1 yellow, size 400; node 2 orange, size 150; node 3 red, size 600. Danh sách cạnh có hướng là `(0,1), (1,2), (1,0), (1,3), (2,3), (3,0)`. Mã lấy thuộc tính bằng `nx.get_node_attributes`, rồi vẽ bằng `nx.draw(H, with_labels=True, node_color=colors, node_size=sizes)`.",
+        "37": "Neural message passing cho node đích F bắt đầu từ trạng thái hiện tại của hai node láng giềng D và E. Mỗi cạnh chuẩn bị một message, lần lượt `f(D→F)` và `f(E→F)`; các message nhận được được summarize hoặc aggregate. Hàm update kết hợp thông tin tổng hợp với trạng thái hiện tại `h^n_{t−1}` của F để tạo trạng thái kế tiếp `h^n_t`.",
+        "38": "Một graph-independent layer cập nhật riêng ba nhóm thuộc tính của graph: global attributes `U_n` qua `f_{U_n}`, node attributes `V_n` qua `f_{V_n}`, và edge attributes `E_n` qua `f_{E_n}`; đầu ra tương ứng là `U_{n+1}`, `V_{n+1}`, `E_{n+1}`. Các update function f có thể là neural network hoặc hàm khả vi khác.",
+        "39": "Pipeline dự đoán end-to-end của GNN trên slide là: Input Graph → một chuỗi GNN blocks → Transformed Graph → Classification layer → dự đoán `Y`. Đầu ra cuối có thể là prediction ở mức node, edge hoặc toàn graph, tùy readout và mục tiêu huấn luyện.",
+        "40": "Ở ví dụ node i, computational graph tại layer 1 lấy vector đặc trưng của bốn node láng giềng, đưa chúng qua bước Aggregation để tạo message tổng hợp M, rồi bước Update kết hợp M với vector hiện tại của node i để tạo embedding mới. Mọi node dùng cùng framework và embedding mới trở thành feature của layer kế tiếp.",
+        "42": "Số message-passing layer quyết định phạm vi lân cận góp vào embedding của node i. Feature ban đầu `x_0` chỉ thuộc node i; sau layer 1, `h_{0,1}` chứa thông tin từ vùng 1-hop; sau layer 2, `h_{0,2}` mở rộng tới vùng 2-hop. Hình tô ba vùng đồng tâm để thể hiện receptive field tăng theo depth.",
+        "47": "MAD dùng cosine distance giữa hai node embedding: `D_ij = 1 − (H_i,: · H_j,:)/(|H_i,:| |H_j,:|)`, với `i,j∈[1,2,…,n]`. Heatmap so MAD của ARMA, ChebGCN, DNA, FeaSt, GAT, GCN, GGNN, GraphSAGE, HighOrder và HyperGraph qua model layer 2 đến 6; màu và trị số cho thấy khoảng cách embedding thường giảm khi depth tăng.",
+        "48": "Metric thứ hai là `MADGap = MAD^rmt − MAD^neb`. `MAD^rmt` là MAD của các remote nodes trong graph topology, còn `MAD^neb` là MAD của các neighboring nodes. Metric dựa trên giả thuyết rằng khi node tương tác, chúng nhận thông tin quan trọng từ node cùng class hoặc nhận noise từ node thuộc class khác.",
+        "52": "Bảng so vanilla với +NGNN: ogbn-proteins, GraphSage+Cluster Sampling, ROC-AUC tăng `67.45±1.21` lên `68.12±0.96`; ogbn-products, GraphSage accuracy tăng `78.27±0.45` lên `79.88±0.34`, GAT+Neighbor Sampling tăng `79.23±0.16` lên `79.67±0.09`; ogbl-collab hit@50, GCN tăng `49.52±0.70` lên `53.48±0.40`, GraphSage tăng `51.66±0.35` lên `53.59±0.56`; ogbl-ppa hit@100, SEAL-DGCNN tăng `48.80±3.16` lên `59.71±2.45`, GCN tăng `18.67±1.32` lên `36.83±0.99`.",
+        "54": "Dạng tổng quát của một message-passing layer là `h_u^(k+1) = UPDATE^(k)(h_u^k, AGGREGATE^(k)({h_v^k, ∀v∈N(u)}))`. UPDATE và AGGREGATE đều là các hàm khả vi. Slide liệt kê các lựa chọn phía UPDATE: Mean, Max, Neural Network, Recurrent NN; phía AGGREGATE: Mean, Max, Normalized Sum, Neural Network. Các lựa chọn khác nhau tạo ra các GNN variants.",
+        "55": "Bốn message-passing variants trên slide, với yêu cầu AGGREGATE phải permutation invariant: (1) Graph Convolutional Network dùng self-loop và tổng chuẩn hóa embedding láng giềng, `h_u^(k) = σ(W^(k) Σ_{v∈N(u)∪{u}} h_v / √(|N(u)||N(v)|))`. (2) Multi-Layer Perceptron as Aggregator tạo `m_{N(u)} = MLP_θ(Σ_{v∈N(u)} MLP_φ(h_v))`, tức đưa trạng thái qua MLP trước và sau phép tổng. (3) Graph Attention Network dùng `m_{N(u)} = Σ_{v∈N(u)} α_{u,v}h_v`, trong đó `α_{u,v}` là attention weight được chuẩn hóa bằng softmax từ điểm số trên `Wh_u` và `Wh_v`. (4) Gated Graph Neural Network cập nhật hồi quy `h_u^(k) = GRU(h_u^(k−1), m_{N(u)}^(k))`.",
+        "56": "Taxonomy kiến trúc tách Propagation, Sampling và Pooling. Propagation gồm convolution operators: spectral models (Spectral Network, ChebNet, GCN, AGCN, DGCN, GWNN), spatial basic models (Neural FPs, DCNN, PATCHY-SAN, LGCN, GraphSAGE), attention models (GAT, GAAN), framework models (MoNet, MPNN, NLNN, GN); recurrent operators gồm convergence models (GNN, GraphESN, SSE, LP-GNN) và gated models (GGNN, Tree LSTM, Graph LSTM, Sentence LSTM); skip connections gồm JKN, Highway GCN, CLN, DeepGCN. Sampling được chia theo node (GraphSAGE, VR-GCN, PinSAGE), layer (FastGCN, LADIES) hoặc subgraph (ClusterGCN, GraphSAINT). Pooling gồm direct (Simple Pooling, Set2set, SortPooling) và hierarchical hoặc coarsening (ECC, DiffPool, gPool, EigenPooling, SAGPool). Bảng trên slide còn đối chiếu đầy đủ aggregator và updater của GGNN, Tree LSTM child-sum, Tree LSTM N-ary và Graph LSTM.",
+        "58": "Bài toán node classification bắt đầu với một graph chỉ có một phần node đã mang nhãn màu xanh hoặc đỏ; các node màu xám có dấu hỏi là chưa gán nhãn. Machine learning dùng cấu trúc graph và thông tin node đã biết để dự đoán class cho từng node chưa nhãn, cho graph đầu ra trong đó mọi node đều được tô theo class.",
+        "60": "Bag-of-Words biến mỗi tài liệu thành vector theo vocabulary 1433 từ. Ví dụ có word counts Neural=2, Network=7, ReLU=1, Reinforcement=0; sau normalization, các giá trị minh họa tương ứng là 0.43, 0.88, 0.03 và 0.00. Đây là pipeline đếm từ → vector đặc trưng chuẩn hóa; slide không nêu công thức chuẩn hóa cụ thể.",
+        "63": "Mã tạo `GCN(hidden_channels=16)`, chuyển sang `model.eval()`, tính `out = model(data.x, data.edge_index)` và gọi `visualize(out, color=data.y)`. Scatter của embedding từ GCN chưa huấn luyện cho thấy các màu lớp còn trộn lẫn, chưa tạo thành các cụm tách biệt.",
+        "64": "Notebook kiểm tra CUDA bằng `torch.version.cuda`, lấy bản PyTorch trước dấu `+` từ `torch.__version__`, và đổi CUDA version thành chuỗi dạng `cu...`. Sau đó cài `torch-scatter`, `torch-sparse`, `torch-cluster`, `torch-spline-conv` từ wheel URL `https://pytorch-geometric.com/whl/torch-{TORCH}+{CUDA}.html`, rồi cài `torch-geometric`. Đây là đúng quy trình phụ thuộc phiên bản được ghi trên slide.",
+        "65": "Cora được load bằng `Planetoid(root='data/Planetoid', name='Cora', transform=NormalizeFeatures())`. Kết quả in ra: 1 graph, 1433 features, 7 classes; `x=[2708,1433]`, `edge_index=[2,10556]`, `y=[2708]`, train, validation và test mask đều dài 2708; có 2708 nodes, 10556 edges, 140 training nodes, training-node label rate 0.05 và graph là undirected.",
+        "66": "Baseline MLP dùng seed 12345 và hai lớp `Linear(dataset.num_features, hidden_channels)` rồi `Linear(hidden_channels, dataset.num_classes)`, tức 1433→16→7. Forward pass là Linear → ReLU → dropout `p=0.5` chỉ khi training → Linear. Model với `hidden_channels=16` cho test accuracy hiển thị 0.5900.",
+        "67": "MLP được huấn luyện bằng `CrossEntropyLoss` và Adam với `lr=0.01`, `weight_decay=5e−4`. Mỗi bước gọi `zero_grad`, tính `out=model(data.x)`, chỉ tính loss trên `data.train_mask`, rồi `backward` và `optimizer.step`. Khi test, model ở eval mode, lấy `argmax(dim=1)`, chỉ so dự đoán trên `test_mask`; test accuracy là 0.5900.",
+        "68": "GCN đơn giản dùng seed 1234567, `GCNConv(dataset.num_features, hidden_channels)` và `GCNConv(hidden_channels, dataset.num_classes)`, tức 1433→16→7. Forward pass là conv1 → ReLU → dropout `p=0.5` khi training → conv2. Công thức lớp GCN là `x_v^(ℓ+1)=W^(ℓ+1) Σ_{w∈N(v)∪{v}} (1/c_{w,v})x_w^ℓ`.",
+        "69": "Trong công thức GCN, `x_v^(ℓ+1)` là feature vector của node v ở layer ℓ+1; `W^(ℓ+1)` là weight matrix; `N(v)` là tập neighbor của v; phép tổng chạy trên các neighbor và chính v; `c_{w,v}` là hằng số chuẩn hóa thường liên quan degree của w và v; `x_w^ℓ` là feature của node w ở layer ℓ.",
+        "70": "Sơ đồ GCN cho node F chuẩn bị message từ các trạng thái hiện tại của neighbor D và E, summarize các message nhận được, rồi kết hợp kết quả với current state của F để tạo next state. Công thức lấy trung bình trên `numNeighbors+1`, vì tổng gồm cả trạng thái hiện tại của node đích lẫn các trạng thái neighbor, sau đó nhân weight và qua activation σ.",
+        "71": "Mô hình GCN đặt `torch.manual_seed(42)`, rồi tạo `conv1=GCNConv(dataset.num_features,hidden_channels)`, `conv2=GCNConv(hidden_channels,hidden_channels)` và lớp ra `Linear(hidden_channels,dataset.num_classes)`. Trong forward, mỗi GCNConv được theo sau bởi ReLU và dropout `p=0.5` với `training=self.training`; cuối cùng áp dụng `softmax(self.out(x),dim=1)`. Phép cập nhật là `x_v^(ℓ+1)=W^(ℓ+1)·Σ_{w∈N(v)∪{v}}(1/c_{w,v})·x_w^(ℓ)`: node v tổng hợp cả láng giềng lẫn chính nó với hệ số chuẩn hóa, rồi biến đổi bằng weight matrix.",
+        "72": "GCN được huấn luyện bằng Adam `lr=0.01`, `weight_decay=5e−4` và `CrossEntropyLoss`. Mỗi epoch forward bằng `model(data.x, data.edge_index)`, chỉ tính loss trên `train_mask`, rồi backward và step; vòng lặp chạy epoch 1 đến 100. Test lấy argmax trên output, chỉ chấm ở `test_mask`; test accuracy hiển thị là 0.8150.",
+        "77": "Mỗi person node có node features Age, Weight, Drink. Ví dụ một cạnh có edge information: `Friend=Yes`, `Friend Since=9`, `Live together=No`. Adjacency matrix 5×5 theo thứ tự node hiển thị có các hàng: `[0,1,1,0,0]`, `[1,0,0,1,0]`, `[1,0,0,0,1]`, `[0,1,0,0,0]`, `[0,0,1,0,0]`. Slide ghi việc dùng edge feature trong GNN là một hot research topic."
+      },
+      "additional_illustrations": [
+        {
+          "page": 4,
+          "asset_member": "illustration_module_gnn_p04.png",
+          "caption": "Các miền dữ liệu và sáu nhóm tác vụ tiêu biểu của GNN."
+        },
+        {
+          "page": 6,
+          "asset_member": "illustration_module_gnn_p06.png",
+          "caption": "Từ bảng và ảnh sang graph, rồi sang feature matrix X cho node classification."
+        },
+        {
+          "page": 12,
+          "asset_member": "illustration_module_gnn_p12.png",
+          "caption": "Từ phân tử caffeine sang adjacency matrix và graph model."
+        },
+        {
+          "page": 37,
+          "asset_member": "illustration_module_gnn_p37.png",
+          "caption": "Chuẩn bị, tổng hợp và cập nhật message cho node F."
+        },
+        {
+          "page": 39,
+          "asset_member": "illustration_module_gnn_p39.png",
+          "caption": "Pipeline dự đoán end-to-end của GNN."
+        },
+        {
+          "page": 40,
+          "asset_member": "illustration_module_gnn_p40.png",
+          "caption": "Ví dụ aggregate–update cho node i."
+        },
+        {
+          "page": 42,
+          "asset_member": "illustration_module_gnn_p42.png",
+          "caption": "Receptive field 1-hop và 2-hop quanh node i."
+        },
+        {
+          "page": 47,
+          "asset_member": "illustration_module_gnn_p47.png",
+          "caption": "Cosine-distance MAD theo model và số GNN layer."
+        },
+        {
+          "page": 54,
+          "asset_member": "illustration_module_gnn_p54.png",
+          "caption": "Công thức tổng quát UPDATE–AGGREGATE và các lựa chọn hàm khả vi."
+        },
+        {
+          "page": 55,
+          "asset_member": "illustration_module_gnn_p55.png",
+          "caption": "GCN, MLP aggregator, GAT và Gated GNN dưới cùng khung message passing."
+        },
+        {
+          "page": 60,
+          "asset_member": "illustration_module_gnn_p60.png",
+          "caption": "Từ word counts sang vector BoW 1433 chiều đã chuẩn hóa."
+        },
+        {
+          "page": 63,
+          "asset_member": "illustration_module_gnn_p63.png",
+          "caption": "Embedding node của GCN chưa huấn luyện: các lớp còn trộn lẫn."
+        },
+        {
+          "page": 70,
+          "asset_member": "illustration_module_gnn_p70.png",
+          "caption": "GCN tổng hợp message láng giềng và trạng thái hiện tại để cập nhật node F."
+        },
+        {
+          "page": 77,
+          "asset_member": "illustration_module_gnn_p77.png",
+          "caption": "Node features, edge attributes và adjacency matrix trong graph xã hội."
+        }
+      ],
+      "illustration_caption": "Message passing qua nhiều lớp với hai bước AGGREGATE và UPDATE.",
+      "entry": "AIO - Sao chép/6. Deep Learning/10. GNN/1. GNN cơ bản.pdf",
+      "output": "07_gnn.pdf"
+    },
+    {
+      "module_id": "module_optimizers",
+      "title": "Tối ưu hóa trong học sâu",
+      "illustration_page": 71,
+      "illustration_caption": "So sánh SGD và SGD có Momentum qua công thức, contour và quỹ đạo tối ưu.",
+      "page_text_supplements": {
+        "4": "Sơ đồ overview đối chiếu hai luồng. Không có optimizer, Input X đi qua các layer để tạo prediction Y′; loss function so Y′ với true target Y và chỉ tạo loss score. Khi có optimizer, loss score được đưa vào optimizer; optimizer thực hiện weight update và hồi tiếp weights vào các layer, tạo vòng lặp huấn luyện khép kín.",
+        "5": "Các ví dụ loss hoặc function trên hình gồm: hàm liên tục `f(x)=x³−2x+1`; hàm liên tục nhưng không khả vi tại x=0 là `f(x)=x^(1/3)`; ví dụ piecewise được ghi `f(x)=3x²−2` khi `x<1` và `f(x)=2x−1` khi `x>1`; một ví dụ gián đoạn khác là `f(x)=1/x`, không xác định tại x=0.",
+        "6": "Bề mặt loss ba chiều đánh dấu riêng local minimum, global minimum và saddle point. Local minimum là đáy của một lân cận nhưng chưa chắc thấp nhất toàn cục; global minimum là điểm thấp nhất trên toàn bề mặt; saddle point đi xuống theo một hướng nhưng đi lên theo hướng khác.",
+        "7": "Trên đường cong một chiều có nhiều local minimum nhưng chỉ một global minimum thấp hơn tất cả. Một local minimum chỉ nhỏ nhất trong vùng lân cận của nó, còn global minimum nhỏ nhất khi xét toàn bộ miền được vẽ.",
+        "8": "Hai ô hình đối chiếu: với hàm chi phí convex, quỹ đạo gradient descent màu đỏ dao động rồi tiến về một lòng chảo global duy nhất; với hàm non-convex có nhiều lòng chảo, quỹ đạo có thể rơi vào một local minimum thay vì đáy thấp nhất toàn cục.",
+        "9": "Điểm yên ngựa được minh họa bằng `f(x)=x³`: tại x=0 tiếp tuyến nằm ngang nhưng điểm đó không phải cực tiểu hay cực đại. Trên bề mặt ba chiều, cùng một điểm cong lên theo một hướng và cong xuống theo hướng vuông góc.",
+        "10": "Đường màu cam biểu diễn activation và đường xanh biểu diễn đạo hàm. Với sigmoid, `σ′(x)=σ(x)(1−σ(x))`; với tanh, `tanh′(x)=1−tanh²(x)`. Ở cả hai đuôi khi `|x|` lớn, đạo hàm tiến gần 0 trong các vùng được khoanh, minh họa hiện tượng gradient vanishing khi activation bão hòa.",
+        "11": "Learning rate quá lớn làm bước cập nhật vượt qua minimum. Hình (a) cho thấy gradient descent bỏ lỡ global minimum ngay cả trên convex cost; hình (b) cho thấy hiện tượng tương tự trên non-convex cost. Các quỹ đạo đỏ dao động hoặc nhảy qua hai phía thay vì đi ổn định tới đáy.",
+        "12": "Sơ đồ optimizer vẽ các mũi tên: SGD→Momentum theo nhánh gradient và SGD→AdaGrad theo nhánh learning rate; Momentum→Nesterov và Momentum→Adam; AdaGrad→RMSprop và AdaGrad→Adadelta; RMSprop→Adam; Nesterov→Nadam; Adam→Nadam, Adam→AMSGrad và Adam→AdaMax.",
+        "13": "Đạo hàm là tỉ số biến thiên `Δy/Δx`. Định nghĩa chính xác trên slide là `d f(x)/dx = lim_{Δx→0} [f(x+Δx)−f(x)]/Δx`. Khi Δx tiến về 0, cát tuyến qua hai điểm tiến tới tiếp tuyến của f(x) trong lân cận tại x.",
+        "16": "Với `f(x)=x²` trên miền `−100≤x≤100`, hình minh họa chọn `x=89` trên nhánh phải của parabol và ghi đạo hàm tại đó bằng `178.00`. Giá trị dương này tương ứng độ dốc đi lên khi x dương.",
+        "21": "Với `f(x)=x²` và quy tắc `x_t=x_{t−1}−ηf′(x)`, kết quả được ghi `x₁₀₀₀≈10⁻³⁸`. Hai đường x và gradient đều giảm nhanh về gần 0; ô phóng đại cho thấy sau khoảng 20 vòng lặp chúng tiếp tục suy giảm tiệm cận thay vì dừng đột ngột.",
+        "22": "Ví dụ SGD trên `f(x)=x²` khởi tạo `x₀=99.0` với `η=0.1`. Sau bước cập nhật đầu tiên, trạng thái hiển thị `Step=1`, `x=79.200`, `f(x)=6272.640` và `f′(x)=158.400`; điểm mới vẫn ở nhánh phải nhưng đã tiến về phía 0.",
+        "23": "Trường hợp được gắn nhãn “SGD - Small Learning Rate” dùng `f(x)=x²`, `x₀=99.0` và `η=0.001`. Trạng thái khởi đầu hiển thị `Step=0`, `x=99.000`, `f(x)=9801.000` và `f′(x)=198.000`, làm mốc cho thảo luận về bước học nhỏ.",
+        "24": "Trường hợp được gắn nhãn “SGD - Large Learning Rate” dùng `f(x)=x²`, `x₀=99.0` và `η=0.8`. Trạng thái khởi đầu hiển thị `Step=0`, `x=99.000`, `f(x)=9801.000` và `f′(x)=198.000`, làm mốc cho thảo luận về bước học lớn.",
+        "25": "Trường hợp được gắn nhãn “SGD - Too Large Learning Rate” dùng `f(x)=x²` và `η=1.1`. Khung tham số ghi `x₀=99.0`, trong khi trạng thái trên đồ thị lại ghi `Step=0`, `x=5.000`, `f(x)=25.000` và `f′(x)=10.000`; hai giá trị x này xuất hiện đồng thời nên cần được giữ nguyên như dữ liệu trình bày.",
+        "26": "Cùng quy tắc SGD `θ_t = θ_{t−1} − η∇_θL`, loss dùng 1 sample giảm nhanh nhưng còn dao động mạnh và nhiễu qua các iteration; dùng m samples làm dao động nhỏ hơn; dùng toàn bộ N samples cho đường loss trơn và ổn định nhất. Hình minh họa trade-off về độ nhiễu của gradient theo số sample dùng để ước lượng.",
+        "31": "Với `f(x)=9x²`, quỹ đạo màu đỏ liên tục vượt qua `x=0` và đổi dấu, nhưng biên độ mỗi lần nhỏ dần. Đồ thị theo iteration cũng cho thấy x và gradient dao động quanh 0 với độ lớn giảm dần, tức hội tụ theo kiểu dao động.",
+        "32": "Với `f(x)=9x²`, `x₀=99.0` và `η=0.1`, bước cập nhật đầu tiên vượt qua đáy sang phía âm. Trạng thái hiển thị `Step=1`, `x=−79.200`, `f(x)=56453.756` và `f′(x)=−1425.600`.",
+        "35": "Với `f(x)=20x²`, `x₀=2.0` và `η=0.1`, bước cập nhật đầu tiên vượt qua `x=0` tới phía âm. Trạng thái hiển thị `Step=1`, `x=−6.000`, `f(x)=720.000` và `f′(x)=−240.000`.",
+        "37": "Composite function g(x) trên hình có thang giá trị rất lớn và dốc mạnh ở ngoài, nhưng vùng đáy từ khoảng x=−3.5 đến x=0.5 rất phẳng; hình phóng to cho thấy cấu trúc đáy chỉ nhìn rõ ở thang nhỏ. Vì độ dốc thay đổi mạnh theo vùng, slide nhấn mạnh phải chọn learning rate phù hợp.",
+        "39": "Với composite function, `x₀=3.0` và `η=0.0005`, bước cập nhật đầu tiên đưa điểm tới `x=−1.3785`. Trạng thái trên đồ thị ghi `Step=1` và `f(x)=−11.4031`, cho thấy điểm mới nằm trong lòng chảo quanh cực tiểu được vẽ.",
+        "41": "Với `f(x)=log(x²)`, `x₀=9.0` và `η=10.0`, trạng thái sau bước cập nhật đầu tiên được ghi `Step=1`, `x=6.7778` và `f(x)=3.8273`. Điểm đỏ vẫn nằm trên nhánh dương của hàm.",
+        "43": "Với hàm không lồi được vẽ, `x₀=−1.5` và `η=0.2`, trạng thái sau bước cập nhật đầu tiên ghi `Step=1`, `x=−1.2866` và `f(x)=1.7507`. Điểm đỏ nằm trên gò nhỏ phía trái của đường cong.",
+        "45": "Learning-rate decay theo chu kỳ giữ η cố định trong từng khoảng rồi giảm bậc tại biên chu kỳ. Ví dụ đường bậc thang giữ khoảng `0.20` đến iteration 20, khoảng `0.10` đến iteration 40 rồi khoảng `0.05`; quy tắc hiển thị là nếu `i mod p=0` thì `η←η/k`.",
+        "47": "Exponential decay dùng `η=η₀×λ^(step/decay_steps)`. Hai đồ thị giữ `η₀=0.2` và `λ=0.9` nhưng so sánh `k=5` với `k=1`: đường `k=1` giảm nhanh hơn rõ rệt, còn `k=5` giảm chậm hơn theo iteration.",
+        "50": "Ví dụ Adagrad dùng cùng tham số `η=0.5`, `s₀=0` và `ε=10⁻⁷`. Ở vị trí `x=−0.8000`, tổng bình phương gradient tích lũy `t_g=0.0045` nên learning rate hiệu dụng hiển thị là `7.4534`: tích lũy nhỏ tạo bước học hiệu dụng rất lớn.",
+        "51": "Ví dụ Adagrad dùng `η=0.5`, `s₀=0` và `ε=10⁻⁷`. Ở vị trí `x=5.4000`, tổng bình phương gradient tích lũy `t_g=527.1106` nên learning rate hiệu dụng chỉ còn `0.0218`: tích lũy lớn làm bước học hiệu dụng bị thu nhỏ mạnh.",
+        "55": "Giới hạn của Adagrad nằm ở tổng tích lũy `s_t = s_{t−1}+g_t²`: mọi squared gradient cũ tiếp tục nằm trong current summation. Slide đối chiếu đường tổng tích lũy này với expectation, tức mong muốn ảnh hưởng lịch sử suy giảm thay vì tăng mãi. Các công thức còn lại là `g_t=∇_θL` và `θ_t=θ_{t−1}−ηg_t/√(s_t+ε)`.",
+        "59": "Với `ρ=0.9`, đường xanh lá là tín hiệu thực tế có nhiễu, đường đỏ là giá trị thực và đường xanh dương là dự đoán bằng exponentially weighted average. Dự đoán được làm mượt rõ rệt nhưng phản ứng chậm hơn, nên có độ trễ so với tín hiệu thực.",
+        "60": "Quy tắc cập nhật là `V_t=ρV_{t−1}+(1−ρ)s_t`. Khi `ρ=0.5`, đường trung bình bám thay đổi mới sát hơn nhưng còn nhiều dao động; `ρ=0.9` làm mượt hơn và trễ hơn; `ρ=0.98` cho mức làm mượt và độ trễ mạnh nhất trong ba trường hợp. Legend ở ô dưới-phải của nguồn bị ghi nhãn không nhất quán, nên chỉ diễn giải đúng hình dạng đường và công thức.",
+        "62": "Minh họa chuyển từ Adagrad sang RMSProp bằng cách thay tổng tích lũy bằng kỳ vọng mũ: `g_t=f′(x_{t−1})`, `s_t=ρs_{t−1}+(1−ρ)g_t²` và `x_t=x_{t−1}−ηg_t/√(s_t+ε)`. Với `η=0.1`, trạng thái trên đồ thị ghi `Step=0`, `x=−3.2000`, `t_g=0.0000` và learning rate hiệu dụng `0.4000`.",
+        "66": "Ví dụ RMSProp dùng `η=0.1`, `ρ=0.9`, `s₀=0.0` và `ε=10⁻⁷` trên một hàm không lồi có vùng gần phẳng được đánh dấu từ `x=−1.0` đến `x=1.0`. Khung tham số ghi `x₀=−3.5`, trong khi trạng thái trên đồ thị đồng thời ghi `Step=0`, `x=−3.2000`, `t_g=0.0000` và learning rate `0.1000`.",
+        "69": "Phiên bản Adam đơn giản trên slide: `g_t=∇_θL`; moment bậc một `m_t=β₁m_{t−1}+(1−β₁)g_t`; moment bậc hai `v_t=β₂v_{t−1}+(1−β₂)g_t²`; cập nhật `θ_t=θ_{t−1}−ηm_t/√(v_t+ε)`. m_t mang thành phần Momentum, còn v_t tạo adaptive learning rate theo bình phương gradient.",
+        "70": "Giới hạn chung của SGD và RMSProp được minh họa tại stationary point; nhãn tiêu đề đồ thị trên nguồn bị viết thành RSMProp. Ở `x=−3.2000`, slide ghi `t_g=0.0000`, `lr=0.0700`. Cả SGD `θ_t=θ_{t−1}−η∇_θL` và RMSProp `g_t=∇_θL`, `s_t=ρs_{t−1}+(1−ρ)g_t²`, `θ_t=θ_{t−1}−ηg_t/√(s_t+ε)` đều cho update bằng 0 khi gradient bằng 0; adaptive step size không tự tạo chuyển động khỏi điểm dừng này.",
+        "74": "Minh họa “Mimic a ball rolling” đặt SGD và SGD + Momentum cạnh nhau trên cùng `f(x)=x²`. Hai hệ đều bắt đầu ở `Step=0` với `x=90.000` và `f(x)=8100.000`, tạo cùng điều kiện đầu để đối chiếu quỹ đạo cập nhật.",
+        "75": "Ví dụ SGD + Momentum dùng `x₀=−3.2`, `η=0.1`, hệ số momentum `m=0.9` và `v₀=0.0`. Trạng thái hiển thị `Step=0`, `x=−3.2000`, `gradient=−0.8110` và `velocity=0.0811` trên đường cong không lồi.",
+        "78": "Ba cách viết SGD + Momentum được đặt dưới nhãn “idea equivalence”: (1) `m_t=ρm_{t−1}−η∇_θL`, `θ_t=θ_{t−1}+m_t`; (2) `m_t=ρm_{t−1}−(1−ρ)α∇_θL`, `θ_t=θ_{t−1}+m_t`; (3) `m_t=β₁m_{t−1}+(1−β₁)∇_θL`, `θ_t=θ_{t−1}−ηm_t`. Khối RMSProp ghi `g_t=∇_θL`, `v_t=β₂v_{t−1}+(1−β₂)g_t²` và `θ_t=θ_{t−1}−ηg_t/(√v_t+ε)`. Khối Adam kết hợp hai moment: `g_t=∇_θL`; `m_t=β₁m_{t−1}+(1−β₁)g_t`; `v_t=β₂v_{t−1}+(1−β₂)g_t²`; `θ_t=θ_{t−1}−[η/(√(v_t/(1−β₂^t))+ε)]·[m_t/(1−β₁^t)]`."
+      },
+      "additional_illustrations": [
+        {
+          "page": 4,
+          "asset_member": "illustration_module_optimizers_p04.png",
+          "caption": "Optimizer khép vòng loss → cập nhật weights → forward pass mới."
+        },
+        {
+          "page": 5,
+          "asset_member": "illustration_module_optimizers_p05.png",
+          "caption": "Ví dụ hàm liên tục, liên tục không khả vi và gián đoạn."
+        },
+        {
+          "page": 8,
+          "asset_member": "illustration_module_optimizers_p08.png",
+          "caption": "Gradient descent trên convex và non-convex cost."
+        },
+        {
+          "page": 9,
+          "asset_member": "illustration_module_optimizers_p09.png",
+          "caption": "Saddle point trong một chiều và ba chiều."
+        },
+        {
+          "page": 10,
+          "asset_member": "illustration_module_optimizers_p10.png",
+          "caption": "Sigmoid và tanh bão hòa ở hai đuôi, khiến đạo hàm tiến gần 0 và gradient dễ biến mất."
+        },
+        {
+          "page": 11,
+          "asset_member": "illustration_module_optimizers_p11.png",
+          "caption": "Learning rate quá lớn khiến gradient descent bỏ lỡ global minimum."
+        },
+        {
+          "page": 12,
+          "asset_member": "illustration_module_optimizers_p12.png",
+          "caption": "Sơ đồ các nhánh optimizer từ SGD qua Momentum, AdaGrad, RMSprop và Adam tới các biến thể."
+        },
+        {
+          "page": 13,
+          "asset_member": "illustration_module_optimizers_p13.png",
+          "caption": "Từ Δy/Δx đến giới hạn định nghĩa đạo hàm tại x."
+        },
+        {
+          "page": 26,
+          "asset_member": "illustration_module_optimizers_p26.png",
+          "caption": "Loss với gradient từ 1 sample, mini-batch m samples và toàn bộ N samples."
+        },
+        {
+          "page": 31,
+          "asset_member": "illustration_module_optimizers_p31.png",
+          "caption": "SGD trên f(x)=9x² hội tụ bằng các bước đổi dấu có biên độ giảm dần."
+        },
+        {
+          "page": 37,
+          "asset_member": "illustration_module_optimizers_p37.png",
+          "caption": "Composite loss có vùng ngoài rất dốc và vùng đáy rất phẳng."
+        },
+        {
+          "page": 50,
+          "asset_member": "illustration_module_optimizers_p50.png",
+          "caption": "Adagrad tại vùng gradient tích lũy nhỏ: learning rate hiệu dụng lớn."
+        },
+        {
+          "page": 51,
+          "asset_member": "illustration_module_optimizers_p51.png",
+          "caption": "Adagrad tại vùng gradient tích lũy lớn: learning rate hiệu dụng nhỏ."
+        },
+        {
+          "page": 60,
+          "asset_member": "illustration_module_optimizers_p60.png",
+          "caption": "Ảnh hưởng của ρ=0.5, 0.9 và 0.98 lên exponentially weighted average."
+        },
+        {
+          "page": 66,
+          "asset_member": "illustration_module_optimizers_p66.png",
+          "caption": "RMSProp trên hàm không lồi có vùng gần phẳng từ x=−1 đến x=1."
+        },
+        {
+          "page": 69,
+          "asset_member": "illustration_module_optimizers_p69.png",
+          "caption": "Phiên bản Adam đơn giản kết hợp moment bậc một và bậc hai."
+        },
+        {
+          "page": 70,
+          "asset_member": "illustration_module_optimizers_p70.png",
+          "caption": "SGD và RMSProp cùng đứng yên tại x=−3.2 khi gradient bằng 0."
+        }
+      ],
+      "entry": "AIO - Sao chép/6. Deep Learning/Thuật toán & tối ưu/104. Các thuật toán tối ưu hóa trong học sâu.pdf",
+      "output": "08_optimizers.pdf"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deeplock.local/schemas/lesson.schema.json",
+  "title": "Lesson",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lesson_id", "pair_id", "atom_id", "title", "learning_objective", "grounding_type", "prerequisite_ids", "hook", "intuition", "tiny_example", "process_steps", "formula_blocks", "common_mistake", "takeaways", "recall_prompt", "estimated_seconds", "source_ref_ids", "illustration_source_ref_ids"],
+  "properties": {
+    "lesson_id": {"type": "string", "minLength": 1},
+    "pair_id": {"type": "string", "minLength": 1},
+    "atom_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1, "maxLength": 160},
+    "learning_objective": {"type": "string", "minLength": 1},
+    "grounding_type": {"type": "string", "enum": ["SOURCE_GROUNDED", "ENRICHMENT"]},
+    "prerequisite_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "hook": {"type": "string", "minLength": 1},
+    "intuition": {"type": "string", "minLength": 1},
+    "tiny_example": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input", "steps", "output"],
+      "properties": {
+        "input": {"type": "string"},
+        "steps": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "output": {"type": "string"}
+      }
+    },
+    "process_steps": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "formula_blocks": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["latex", "plain_text", "symbols"],
+        "properties": {
+          "latex": {"type": "string"},
+          "plain_text": {"type": "string"},
+          "symbols": {
+            "type": "array", "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["symbol", "meaning"],
+              "properties": {"symbol": {"type": "string"}, "meaning": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "common_mistake": {"type": "string", "minLength": 1},
+    "takeaways": {"type": "array", "minItems": 1, "maxItems": 3, "items": {"type": "string"}},
+    "recall_prompt": {"type": "string", "minLength": 1},
+    "estimated_seconds": {"type": "integer", "minimum": 30, "maximum": 90},
+    "source_ref_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "illustration_source_ref_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  }
+}

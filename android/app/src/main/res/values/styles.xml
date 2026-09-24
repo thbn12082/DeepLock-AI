@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DeepLock" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#315DA8</item>
+        <item name="android:windowBackground">#FFEFA3</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">#FFEFA3</item>
+        <item name="android:statusBarColor">#FFEFA3</item>
+    </style>
+
+    <!-- MainActivity is a dark statistics dashboard; the lock-screen activity keeps the yellow theme above. -->
+    <style name="Theme.DeepLock.Dashboard" parent="Theme.DeepLock">
+        <item name="android:windowBackground">#080B0D</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">#080B0D</item>
+        <item name="android:statusBarColor">#080B0D</item>
+    </style>
+</resources>

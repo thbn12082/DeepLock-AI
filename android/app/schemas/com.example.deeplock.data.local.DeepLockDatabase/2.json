@@ -1,0 +1,631 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "493fb8ff5fbaab32d90ac19613cad821",
+    "entities": [
+      {
+        "tableName": "atom_progress",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`atomId` TEXT NOT NULL, `status` TEXT NOT NULL, `mastery` REAL NOT NULL, `completedAt` INTEGER, `dueAt` INTEGER NOT NULL DEFAULT 0, `leitnerBox` INTEGER NOT NULL DEFAULT 1, `lastStudiedAt` INTEGER, `bookmarked` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`atomId`))",
+        "fields": [
+          {
+            "fieldPath": "atomId",
+            "columnName": "atomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mastery",
+            "columnName": "mastery",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completedAt",
+            "columnName": "completedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "dueAt",
+            "columnName": "dueAt",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "leitnerBox",
+            "columnName": "leitnerBox",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "lastStudiedAt",
+            "columnName": "lastStudiedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bookmarked",
+            "columnName": "bookmarked",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "atomId"
+          ]
+        }
+      },
+      {
+        "tableName": "attempts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `questionId` TEXT NOT NULL, `atomId` TEXT NOT NULL, `selectedOptionId` TEXT NOT NULL, `correct` INTEGER NOT NULL, `origin` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `attemptUid` TEXT NOT NULL DEFAULT '', `pairId` TEXT NOT NULL DEFAULT '', `preRecallMs` INTEGER NOT NULL DEFAULT 0, `preRecallSkipped` INTEGER NOT NULL DEFAULT 0)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atomId",
+            "columnName": "atomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selectedOptionId",
+            "columnName": "selectedOptionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correct",
+            "columnName": "correct",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attemptUid",
+            "columnName": "attemptUid",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "pairId",
+            "columnName": "pairId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "preRecallMs",
+            "columnName": "preRecallMs",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "preRecallSkipped",
+            "columnName": "preRecallSkipped",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "mistakes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`questionId` TEXT NOT NULL, `atomId` TEXT NOT NULL, `errorCount` INTEGER NOT NULL, `lastSelectedOptionId` TEXT NOT NULL, `lastSeenAt` INTEGER NOT NULL, `dueAt` INTEGER NOT NULL, `pairId` TEXT NOT NULL DEFAULT '', `correctOptionId` TEXT NOT NULL DEFAULT '', `selectedRationale` TEXT NOT NULL DEFAULT '', `status` TEXT NOT NULL DEFAULT 'UNREVIEWED', `userNote` TEXT NOT NULL DEFAULT '', `firstSeenAt` INTEGER NOT NULL DEFAULT 0, `improvedAt` INTEGER, PRIMARY KEY(`questionId`))",
+        "fields": [
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atomId",
+            "columnName": "atomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "errorCount",
+            "columnName": "errorCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSelectedOptionId",
+            "columnName": "lastSelectedOptionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSeenAt",
+            "columnName": "lastSeenAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dueAt",
+            "columnName": "dueAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pairId",
+            "columnName": "pairId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "correctOptionId",
+            "columnName": "correctOptionId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "selectedRationale",
+            "columnName": "selectedRationale",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'UNREVIEWED'"
+          },
+          {
+            "fieldPath": "userNote",
+            "columnName": "userNote",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "firstSeenAt",
+            "columnName": "firstSeenAt",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "improvedAt",
+            "columnName": "improvedAt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "questionId"
+          ]
+        }
+      },
+      {
+        "tableName": "lock_cycle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`singletonId` INTEGER NOT NULL, `state` TEXT NOT NULL, `activePairId` TEXT, `lastEventAt` INTEGER NOT NULL, `successfulCycles` INTEGER NOT NULL, `currentAtomId` TEXT, `currentLessonId` TEXT, `currentQuestionId` TEXT, `lastScreenOffAt` INTEGER, `lastScreenOnAt` INTEGER, `activeUnlockSessionId` TEXT, `pausedUntil` INTEGER, `revision` INTEGER NOT NULL DEFAULT 0, `deviceInactive` INTEGER NOT NULL DEFAULT 0, `lastEventType` TEXT, `serviceHeartbeatAt` INTEGER, PRIMARY KEY(`singletonId`))",
+        "fields": [
+          {
+            "fieldPath": "singletonId",
+            "columnName": "singletonId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mode",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pendingPairId",
+            "columnName": "activePairId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastEventAt",
+            "columnName": "lastEventAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "successfulCycles",
+            "columnName": "successfulCycles",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentAtomId",
+            "columnName": "currentAtomId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currentLessonId",
+            "columnName": "currentLessonId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currentQuestionId",
+            "columnName": "currentQuestionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastScreenOffAt",
+            "columnName": "lastScreenOffAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastScreenOnAt",
+            "columnName": "lastScreenOnAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "activeUnlockSessionId",
+            "columnName": "activeUnlockSessionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pausedUntil",
+            "columnName": "pausedUntil",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "deviceInactive",
+            "columnName": "deviceInactive",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "lastEventType",
+            "columnName": "lastEventType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "serviceHeartbeatAt",
+            "columnName": "serviceHeartbeatAt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "singletonId"
+          ]
+        }
+      },
+      {
+        "tableName": "unlock_sessions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unlockSessionId` TEXT NOT NULL, `screenOffAt` INTEGER NOT NULL, `screenOnAt` INTEGER NOT NULL, `keyguardLocked` INTEGER NOT NULL, `pairId` TEXT NOT NULL, `atomId` TEXT NOT NULL, `itemType` TEXT NOT NULL, `itemId` TEXT NOT NULL, `questionId` TEXT, `surface` TEXT NOT NULL, `notifyCount` INTEGER NOT NULL DEFAULT 0, `notificationPostedAt` INTEGER, `userPresentAt` INTEGER, `outcome` TEXT, PRIMARY KEY(`unlockSessionId`))",
+        "fields": [
+          {
+            "fieldPath": "unlockSessionId",
+            "columnName": "unlockSessionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "screenOffAt",
+            "columnName": "screenOffAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "screenOnAt",
+            "columnName": "screenOnAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keyguardLocked",
+            "columnName": "keyguardLocked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pairId",
+            "columnName": "pairId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atomId",
+            "columnName": "atomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemType",
+            "columnName": "itemType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "itemId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "surface",
+            "columnName": "surface",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notifyCount",
+            "columnName": "notifyCount",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "notificationPostedAt",
+            "columnName": "notificationPostedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "userPresentAt",
+            "columnName": "userPresentAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "outcome",
+            "columnName": "outcome",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "unlockSessionId"
+          ]
+        }
+      },
+      {
+        "tableName": "quiz_sessions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `pairId` TEXT NOT NULL, `atomId` TEXT NOT NULL, `origin` TEXT NOT NULL, `phase` TEXT NOT NULL, `preRecallStartedAt` INTEGER NOT NULL, `optionsVisibleAt` INTEGER, `preRecallSkipped` INTEGER NOT NULL DEFAULT 0, `selectedOptionId` TEXT, `submittedAttemptUid` TEXT, `updatedAt` INTEGER NOT NULL, PRIMARY KEY(`sessionId`))",
+        "fields": [
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pairId",
+            "columnName": "pairId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atomId",
+            "columnName": "atomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phase",
+            "columnName": "phase",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preRecallStartedAt",
+            "columnName": "preRecallStartedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "optionsVisibleAt",
+            "columnName": "optionsVisibleAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "preRecallSkipped",
+            "columnName": "preRecallSkipped",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "selectedOptionId",
+            "columnName": "selectedOptionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "submittedAttemptUid",
+            "columnName": "submittedAttemptUid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "sessionId"
+          ]
+        }
+      },
+      {
+        "tableName": "study_events",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `unlockSessionId` TEXT, `pairId` TEXT, `itemId` TEXT, `surface` TEXT, `detail` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unlockSessionId",
+            "columnName": "unlockSessionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pairId",
+            "columnName": "pairId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "itemId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "surface",
+            "columnName": "surface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "detail",
+            "columnName": "detail",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "widget_snapshot",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`singletonId` INTEGER NOT NULL, `dueCount` INTEGER NOT NULL, `weakAtomId` TEXT, `weakAtomTitle` TEXT, `continueAtomId` TEXT, `continueAtomTitle` TEXT, `updatedAt` INTEGER NOT NULL, PRIMARY KEY(`singletonId`))",
+        "fields": [
+          {
+            "fieldPath": "singletonId",
+            "columnName": "singletonId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dueCount",
+            "columnName": "dueCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weakAtomId",
+            "columnName": "weakAtomId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "weakAtomTitle",
+            "columnName": "weakAtomTitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "continueAtomId",
+            "columnName": "continueAtomId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "continueAtomTitle",
+            "columnName": "continueAtomTitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "singletonId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '493fb8ff5fbaab32d90ac19613cad821')"
+    ]
+  }
+}

@@ -1,8 +1,10 @@
 # DeepLock AI
 
+Tiếp tục công việc Luna/9router: đọc [bàn giao ngày 2026-09-08](docs/luna-handoff.md) trước khi chạy hoặc báo tiến độ content builder.
+
 DeepLock AI là ứng dụng Android native học Deep Learning theo hai bề mặt dùng chung tiến độ:
 
-- **Full Study**: đọc bài, làm quiz active recall, xem nguồn, Sổ lỗi, Mini Lab và mind map hoàn toàn offline.
+- **Full Study**: đọc bài, làm quiz active recall, xem nguồn, Sổ lỗi và Mini Lab hoàn toàn offline.
 - **Lock Review**: mở thẳng bảng trên màn hình khóa theo nhịp cố định **kiến thức → quiz đúng từ kiến thức đó**; không thay lock screen hệ thống.
 
 Android APK không có network layer, không có `INTERNET`/`ACCESS_NETWORK_STATE`. GPT-5.5 chỉ được gọi bởi content builder trên máy tính trước lúc build APK.
@@ -53,7 +55,7 @@ make content-package
 make content-install
 ```
 
-Builder ánh xạ model logic `gpt-5.5` sang route 9router `cx/gpt-5.5` và reviewer sang `cx/gpt-5.5-review`, dùng tối đa 5 request song song, connection reuse, retry/backoff, SQLite cache và resume. Reviewer dùng request mới, `store:false`, cache/prompt riêng và không nhận đáp án generator đã khai báo; yêu cầu `REPAIR` được sửa tối đa hai vòng rồi review lại từ đầu.
+Builder ánh xạ model logic `gpt-5.5` sang route 9router `cx/gpt-5.5` và reviewer sang `cx/gpt-5.5-review`, dùng tối đa 10 request song song (hai request cho mỗi account trong cấu hình 5 account đã kiểm chứng), timeout 20 phút cho response lecture dài, connection reuse, retry/backoff, SQLite cache và resume. Reviewer dùng request mới, `store:false`, cache/prompt riêng và không nhận đáp án generator đã khai báo; yêu cầu `REPAIR` được sửa tối đa hai vòng rồi review lại từ đầu.
 
 ## Build offline
 

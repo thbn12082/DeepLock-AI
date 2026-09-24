@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "deeplock-content"
+version = "0.1.0"
+description = "Offline-first DeepLock AI content pack builder"
+requires-python = ">=3.12"
+dependencies = [
+  "jsonschema>=4.25,<5",
+  "openai>=2.16,<3",
+  "pydantic>=2.12,<3",
+  "pymupdf>=1.26,<2",
+  "python-dotenv>=1.1,<2",
+  "typer>=0.21,<1"
+]
+
+[project.optional-dependencies]
+test = ["pytest>=9,<10", "pytest-cov>=7,<8"]
+
+[project.scripts]
+deeplock-content = "deeplock_content.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["deeplock_content"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+
+[tool.coverage.run]
+branch = true
+source = ["deeplock_content"]
+

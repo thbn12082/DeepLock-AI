@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deeplock.local/schemas/source-excerpt.schema.json",
+  "title": "SourceExcerpt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_excerpt_id", "source_ref_id", "document_id", "chunk_id", "document_label", "heading_path", "page_start", "page_end", "context_text", "highlight_start", "highlight_end", "excerpt_hash"],
+  "properties": {
+    "source_excerpt_id": {"type": "string", "minLength": 1},
+    "source_ref_id": {"type": "string", "minLength": 1},
+    "document_id": {"type": "string", "minLength": 1},
+    "chunk_id": {"type": "string", "minLength": 1},
+    "document_label": {"type": "string", "minLength": 1},
+    "heading_path": {"type": "array", "items": {"type": "string"}},
+    "page_start": {"type": "integer", "minimum": 1},
+    "page_end": {"type": "integer", "minimum": 1},
+    "context_text": {"type": "string", "minLength": 1},
+    "highlight_start": {"type": "integer", "minimum": 0},
+    "highlight_end": {"type": "integer", "minimum": 1},
+    "excerpt_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}
+

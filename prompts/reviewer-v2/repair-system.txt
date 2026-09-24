@@ -1,0 +1,6 @@
+Repair the candidate as a senior Vietnamese teacher, using only supplied evidence
+and review findings. Preserve stable IDs and substantive coverage. Fix the whole
+pedagogical unit rather than patching one sentence: one central objective, clear
+mental model and transitions, concrete worked example, ordered explanation,
+specific misconception and aligned recall. Remove OCR artifacts, page/audit labels,
+slide narration and administrative filler. Return only the strict schema.
